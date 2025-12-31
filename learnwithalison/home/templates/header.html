@@ -1,0 +1,131 @@
+{% load static %}
+
+<header>
+  <div class="university-header-wrapper">
+
+    <!-- Header Top -->
+    <div class="header-university-top-area d-none d-lg-block">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-8">
+            <div class="header-left">
+              <a href="tel:+2347039618664"><i class="fas fa-phone"></i> +2347039618664</a>
+              <a href="mailto:info@example.com"><i class="fal fa-envelope"></i> info@example.com</a>
+              <span>Lagos, Nigeria</span>
+            </div>
+          </div>
+          <div class="col-lg-4">
+            <div class="header-right f-right">
+              <div class="header-right-icon">
+                <a href="#"><i class="fab fa-facebook-f"></i></a>
+                <a href="#"><i class="fab fa-twitter"></i></a>
+                <a href="#"><i class="fab fa-linkedin"></i></a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Main Header -->
+    <div class="header-main3 transpaerent-header sticky-header">
+      <div class="container">
+        <div class="row align-items-center">
+
+          <!-- Logo -->
+          <div class="col-xl-2 col-lg-2 col-md-3 col-3">
+            <div class="header-logo">
+              <a href="{% url 'home' %}">
+                <img src="{% static 'graduation-cap.png' %}" alt="Logo" style="width:50px;">
+              </a>
+            </div>
+          </div>
+
+          <!-- Menu -->
+          <div class="col-xl-10 col-lg-10 col-md-9 col-9">
+            <div class="header-main-right d-flex justify-content-end align-items-center">
+
+              <!-- Nav -->
+              <div class="main-menu mr-30">
+                <nav id="mobile-menu">
+                  <ul>
+
+                    <li><a href="{% url 'home' %}">Home</a></li>
+                    <li><a href="{% url 'about' %}">About Me</a></li>
+
+                    <li class="menu-item-has-children">
+                      <a href="{% url 'course_list' %}">Courses</a>
+                      <ul class="sub-menu">
+                        <li><a href="{% url 'course_list' %}">All Courses</a></li>
+                      </ul>
+                    </li>
+
+                    <li><a href="{% url 'membership' %}">Membership</a></li>
+                    <li><a href="{% url 'contact' %}">Contact</a></li>
+
+<!--                    {% if request.user.is_authenticated %}-->
+<!--                      <li><a href="{% url 'dashboard' %}">Dashboard</a></li>-->
+<!--                    {% endif %}-->
+
+                  </ul>
+                </nav>
+              </div>
+
+              <!-- Header Buttons -->
+              <div class="header-btn d-flex align-items-center">
+
+                <!-- Cart -->
+                <div class="cart-wrapper mr-25">
+                  <a href="#" class="cart-toggle-btn">
+                    <div class="header__cart-icon p-relative">
+                      <i class="fas fa-shopping-cart"></i>
+                      <span class="item-number">
+                        {{ cart_count|default:0 }}
+                      </span>
+                    </div>
+                  </a>
+                </div>
+
+                <!-- Auth Buttons -->
+                {% if request.user.is_authenticated %}
+                  <a class="edu-thard-btn d-none d-lg-block mr-10" href="{% url 'dashboard' %}">
+                    Dashboard
+                  </a>
+
+                  <form method="POST" action="{% url 'logout' %}">
+                    {% csrf_token %}
+                    <button type="submit" class="edu-border-btn d-none d-lg-block">
+                      Logout
+                    </button>
+                  </form>
+                {% else %}
+                  <a class="edu-thard-btn d-none d-lg-block mr-10" href="{% url 'login' %}">
+                    Login
+                  </a>
+<!--                  <a class="edu-border-btn d-none d-lg-block" href="{% url 'membership' %}">-->
+<!--                    Enroll Now-->
+<!--                  </a>-->
+                {% endif %}
+
+                <!-- Mobile Menu Toggle -->
+                <div class="menu-bar ml-20 d-lg-none">
+                  <a class="side-toggle header-3" href="javascript:void(0)">
+                    <div class="bar-icon header-3">
+                      <span></span>
+                      <span></span>
+                      <span></span>
+                    </div>
+                  </a>
+                </div>
+
+              </div>
+
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+  </div>
+</header>

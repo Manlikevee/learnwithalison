@@ -1,0 +1,236 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+
+
+<main>
+
+    <style>
+        .course-wrapper-2 {
+    padding: 6px;
+    position: relative;
+    border: 1px solid #f3f3f3;
+    background: white;
+    border-radius: 4px;
+}
+    </style>
+
+      <!-- hero-area-start -->
+      <div class="hero-arera course-item-height" data-background="images/slider/course-slider.jpg">
+         <div class="container">
+            <div class="row">
+               <div class="col-xl-12">
+                  <div class="hero-course-1-text">
+                     <h2>Courses</h2>
+                  </div>
+                  <div class="course-title-breadcrumb">
+                     <nav>
+                        <ol class="breadcrumb">
+                           <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+                           <li class="breadcrumb-item"><span>Courses</span></li>
+                        </ol>
+                     </nav>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+      <!-- hero-area-end -->
+
+      <!-- course-barup-area -->
+      <div class="course-bar-up-area pt-120">
+         <div class="container">
+            <div class="row">
+               <div class="col-xl-12">
+                  <div class="course-main-wrapper mb-30">
+                     <div class="bar-filter">
+                        <i class="flaticon-filter"></i>
+                        <span>Filter</span>
+                        <span>(2)</span>
+                     </div>
+                     <div class="corse-bar-wrapper">
+                        <div class="bar-search">
+                           <form action="#">
+                              <div class="bar-secrch-icon position-relative">
+                                 <input type="text" placeholder="Search keyword...">
+                                 <button type="submit"><i class="far fa-search"></i></button>
+                              </div>
+                           </form>
+                        </div>
+                     </div>
+                     <div class="course-sidebar-tab">
+                        <div class="course-sidebar-wrapper">
+                           <div class="curse-tab-left-wrap">
+                              <div class="course-results">
+                                 Showing <span class="course-result-showing">15</span> of <span class="course-result-number">60</span> results
+                              </div>
+                           </div>
+                           <div class="couse-dropdown">
+                              <div class="course-drop-inner">
+                                 <select>
+                                    <option value="">Newly published</option>
+                                    <option value="">Most Viewed</option>
+                                    <option value="">5 Star Rated</option>
+                                    <option value="">Duration</option>
+                                 </select>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+
+            </div>
+         </div>
+      </div>
+      <!-- course-barup-area-end -->
+
+      <!-- course-content-start -->
+      <section class="course-content-area pb-90">
+         <div class="container">
+            <div class="row mb-10">
+
+               <div class="col-xl-12 col-lg-8 col-md-12">
+                  <div id="playlist-container" class="row">
+
+
+<script>
+const API_KEY = "AIzaSyC3eNmCxI9Ibf2W78qbUrj-JGyqf0DxtTg";
+const CHANNEL_ID = "UCs40yHwuCehnL-jsekdF9NQ";
+
+async function loadPlaylists() {
+    const url = `https://www.googleapis.com/youtube/v3/playlists?part=snippet,contentDetails&channelId=${CHANNEL_ID}&maxResults=50&key=${API_KEY}`;
+
+    const res = await fetch(url);
+    const data = await res.json();
+
+    const container = document.getElementById("playlist-container");
+    container.innerHTML = ""; // clear first
+
+    data.items.forEach(item => {
+        const thumb = item.snippet.thumbnails.high?.url || "";
+        const title = item.snippet.title;
+        const desc = item.snippet.description || "";
+        const lessons = item.contentDetails.itemCount;
+        const playlistId = item.id;
+
+        const card = `
+        <div class="col-xl-4 col-lg-6 col-md-6">
+            <div class="course-wrapper-2 mb-30">
+                <div class="student-course-img">
+                    <img src="${thumb}" alt="${title}">
+                </div>
+
+                <div class="course-cart">
+                    <div class="course-info-wrapper">
+                        <div class="cart-info-body">
+
+                            <span class="category-color category-color-1">
+                                <a href="https://www.youtube.com/playlist?list=${playlistId}" target="_blank">
+                                    Playlist
+                                </a>
+                            </span>
+
+                            <a href="https://www.youtube.com/playlist?list=${playlistId}" target="_blank">
+                                <h3>${title}</h3>
+                            </a>
+
+                            <div class="cart-lavel">
+                                <h5>Lessons : <span>${lessons}</span></h5>
+                                <p>${desc.substring(0, 120)}...</p>
+                            </div>
+
+                            <div class="info-cart-text">
+                                <ul>
+                                    <li><i class="far fa-check"></i>Free tutorials</li>
+                                    <li><i class="far fa-check"></i>High quality</li>
+                                    <li><i class="far fa-check"></i>YouTube playlist</li>
+                                </ul>
+                            </div>
+
+                            <div class="course-action">
+                                <a href="https://www.youtube.com/playlist?list=${playlistId}"
+                                   target="_blank"
+                                   class="view-details-btn">
+                                   View Playlist
+                                </a>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+                <div class="student-course-footer">
+                    <div class="student-course-linkter">
+                        <div class="course-lessons">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16.471" height="16.471">
+                                <g transform="translate(-0.008)">
+                                    <path d="M16,1.222H8.726V.483a.483.483,0,1,0-.965,0v.74H.491A.483.483,0,0,0,.008,1.7V13.517A.483.483,0,0,0,.491,14H5.24L4.23,15.748a.483.483,0,1,0,.836.483L6.354,14H7.761v1.99a.483.483,0,0,0,.965,0V14h1.407l1.288,2.231a.483.483,0,1,0,.836-.483L11.247,14H16a.483.483,0,0,0,.483-.483V1.7A.483.483,0,0,0,16,1.222Z"/>
+                                </g>
+                            </svg>
+                            <span class="ms-2">${lessons} Lessons</span>
+                        </div>
+
+                        <div class="portfolio-price">
+                            <span>Free</span>
+                        </div>
+                    </div>
+
+                    <div class="student-course-text">
+                        <h3>
+                            <a href="https://www.youtube.com/playlist?list=${playlistId}" target="_blank">
+                                ${title}
+                            </a>
+                        </h3>
+                    </div>
+
+                    <div class="portfolio-user">
+                        <div class="user-icon">
+                            <i class="fas fa-user"></i> Alison Tutorials
+                        </div>
+
+                        <div class="course-icon">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fal fa-star"></i>
+                            <span>(Free)</span>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        `;
+
+        container.insertAdjacentHTML("beforeend", card);
+    });
+}
+
+loadPlaylists();
+</script>
+
+
+                  </div>
+                  <div class="row">
+                     <div class="edu-pagination mt-30 mb-20">
+                        <ul>
+                           <li><a href="#"><i class="fal fa-angle-left"></i></a></li>
+                           <li class="active"><a href="#"><span>01</span></a></li>
+                           <li><a href="#"><span>02</span></a></li>
+                           <li><a href="#"><i class="fal fa-angle-right"></i></a></li>
+                        </ul>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </section>
+      <!-- course-content-end -->
+
+   </main>
+
+
+{% endblock %}

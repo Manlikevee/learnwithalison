@@ -1,0 +1,260 @@
+{% load static %}
+<!DOCTYPE html><html class="no-js" lang="zxx"><head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>Welcome toInstructor Alison Learning Platform</title>
+    <meta name="description" content="Instructor Alison's Tutorials - Simplified lessons in Mathematics, Physics, and Chemistry for learners at all levels.">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Place favicon.ico in the root directory -->
+    <link rel="shortcut icon" type="image/x-icon" href="images/favicon.png">
+    <!-- CSS here -->
+    <link rel="stylesheet" href="{% static 'css/preloader.css' %}">
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/meanmenu.css' %}">
+    <link rel="stylesheet" href="{% static 'css/animate.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/owl.carousel.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/swiper-bundle.css' %}">
+    <link rel="stylesheet" href="{% static 'css/backToTop.css' %}">
+    <link rel="stylesheet" href="{% static 'css/magnific-popup.css' %}">
+    <link rel="stylesheet" href="{% static 'css/huicalendar.css' %}">
+    <link rel="stylesheet" href="{% static 'css/nice-select.css' %}">
+    <link rel="stylesheet" href="{% static 'css/fontAwesome5Pro.css' %}">
+    <link rel="stylesheet" href="{% static 'css/flaticon.css' %}">
+    <link rel="stylesheet" href="{% static 'css/default.css' %}">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+
+<body>
+
+    <!--[if lte IE 9]>
+<p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience and security.</p>
+<![endif]-->
+
+    <!-- Add your site or application content here -->
+
+    <!-- pre loader area start -->
+    <div id="loading">
+        <div id="loading-center">
+            <div id="loading-center-absolute">
+           <div class="loading-icon text-center d-flex flex-column align-items-center justify-content-center">
+                    <img src="{% static 'logs.png' %}" alt="logo-img" style="max-width: 200px; height: auto; object-fit: contain;">
+                    <img class="loading-logo" src="{% static 'images/preloader.svg' %}" alt="">
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- pre loader area end -->
+
+    <!-- cart mini area start -->
+    <div class="cartmini__area">
+      <div class="cartmini__wrapper">
+         <div class="cartmini__title">
+            <h4>Shopping cart</h4>
+         </div>
+         <div class="cartmini__close">
+            <button type="button" class="cartmini__close-btn"><i class="fal fa-times"></i></button>
+         </div>
+         <div class="cartmini__widget">
+            <div class="cartmini__inner">
+               <ul>
+                  <li>
+                     <div class="cartmini__thumb">
+                        <a href="course.html">
+                           <img src="{% static 'images/product-thumb-01.png' %}" alt="image not found">
+                        </a>
+                     </div>
+                     <div class="cartmini__content">
+                        <h5><a href="course.html">physics</a></h5>
+                        <div class="product-quantity mt-10 mb-10">
+                           <span class="cart-minus">-</span>
+                           <input class="cart-input" type="text" value="1">
+                           <span class="cart-plus">+</span>
+                        </div>
+                        <div class="product__sm-price-wrapper">
+                           <span class="product__sm-price">$24.00</span>
+                        </div>
+                     </div>
+                     <a href="#" class="cartmini__del"><i class="fal fa-times"></i></a>
+                  </li>
+                  <li>
+                     <div class="cartmini__thumb">
+                        <a href="course.html">
+                           <img src="{% static 'images/product-thumb-02.png' %}" alt="image not found">
+                        </a>
+                     </div>
+                     <div class="cartmini__content">
+                        <h5><a href="course.html">math</a></h5>
+                        <div class="product-quantity mt-10 mb-10">
+                           <span class="cart-minus">-</span>
+                           <input class="cart-input" type="text" value="1">
+                           <span class="cart-plus">+</span>
+                        </div>
+                        <div class="product__sm-price-wrapper">
+                           <span class="product__sm-price">$12.00</span>
+                        </div>
+                     </div>
+                     <a href="#" class="cartmini__del"><i class="fal fa-times"></i></a>
+                  </li>
+                  <li>
+                     <div class="cartmini__thumb">
+                        <a href="course.html">
+                           <img src="{% static 'images/product-thumb-03.png' %}" alt="image not found">
+                        </a>
+                     </div>
+                     <div class="cartmini__content">
+                        <h5><a href="course.html">Physics</a></h5>
+                        <div class="product-quantity mt-10 mb-10">
+                           <span class="cart-minus">-</span>
+                           <input class="cart-input" type="text" value="1">
+                           <span class="cart-plus">+</span>
+                        </div>
+                        <div class="product__sm-price-wrapper">
+                           <span class="product__sm-price">$42.00</span>
+                        </div>
+                     </div>
+                     <a href="#" class="cartmini__del"><i class="fal fa-times"></i></a>
+                  </li>
+               </ul>
+            </div>
+            <div class="cartmini__checkout">
+               <div class="cartmini__checkout-title mb-30">
+                  <h4>Subtotal:</h4>
+                  <span>$78.00</span>
+               </div>
+            </div>
+            <div class="cartmini__viewcart">
+               <a href="cart.html" class="edu-sec-btn">View cart</a>
+               <a href="checkout.html" class="edu-sec-btn">Checkout</a>
+           </div>
+         </div>
+      </div>
+   </div>
+    <div class="body-overlay"></div>
+    <!-- cart mini area end -->
+
+
+
+    <!-- side toggle start -->
+    <div class="fix">
+        <div class="side-info">
+            <div class="side-info-content">
+                <div class="offset-widget offset-logo mb-40">
+                    <div class="row align-items-center">
+                        <div class="col-9">
+                            <a href="/">
+                                <img src="{% static 'graduation-cap.png' %}" alt="Logo" style="width: 50px; height: auto; object-fit: contain;">
+                            </a>
+                        </div>
+                        <div class="col-3 text-end"><button class="side-info-close"><i class="fal fa-times"></i></button>
+                        </div>
+                    </div>
+                </div>
+                <div class="mobile-menu d-xl-none fix"></div>
+                <div class="offset-widget offset_menu-top mb-20">
+                    <div class="header-menu-top-icon mb-20">
+                        <a href="#"><i class="fas fa-phone"></i>(555) 674 890 556</a>
+                        <a href="#"><i class="fal fa-envelope"></i>Instructorallison@gmail.com</a>
+                        <i class="fal fa-map-marker-alt"></i><span>Lagos Nigeria</span>
+                    </div>
+                </div>
+<div class="offset-widget button mb-20">
+  <div class="user-btn-wrapper d-flex align-items-center">
+    <div class="enroll-btn">
+
+      {% if request.user.is_authenticated %}
+        <a class="edu-thard-btn" href="{% url 'dashboard' %}">
+          Go to Dashboard
+        </a>
+      {% else %}
+        <a class="edu-thard-btn" href="{% url 'login' %}">
+          Login to Enroll
+        </a>
+      {% endif %}
+
+    </div>
+  </div>
+</div>
+            </div>
+        </div>
+    </div>
+    <div class="offcanvas-overlay"></div>
+    <div class="offcanvas-overlay-white"></div>
+    <!-- side toggle end -->
+
+
+    <!-- header-area-start -->
+
+    <!-- header-aea-end -->
+{% include 'header.html' %}
+
+
+    <style>
+
+/* Success */
+.alert-success {
+  background-color: #e7f7ee;
+  color: #13683c;
+}
+
+/* Error */
+.alert-error,
+.alert-danger {
+  background-color: #fdecea;
+  color: #9f1c1c;
+}
+
+/* Warning */
+.alert-warning {
+  background-color: #fff4e5;
+  color: #8a4b00;
+}
+
+/* Info */
+.alert-info {
+  background-color: #e7f1ff;
+  color: #084298;
+}
+
+
+
+    </style>
+
+     {% block content %}
+
+
+    {% endblock %}
+
+    <!-- footer-area-start -->
+{% include 'footer.html' %}
+    <!-- footer-area-end -->
+
+    <!-- back to top start -->
+    <div class="progress-wrap">
+        <svg class="progress-circle svg-content" width="100%" height="100%" viewBox="-1 -1 102 102">
+            <path d="M50,1 a49,49 0 0,1 0,98 a49,49 0 0,1 0,-98"></path>
+        </svg>
+    </div>
+    <!-- back to top end -->
+
+    <!-- JS here -->
+    <script src="{% static 'js/jquery-3.6.0.min.js' %}"></script>
+    <script src="{% static 'js/waypoints.min.js' %}"></script>
+    <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
+    <script src="{% static 'js/meanmenu.js' %}"></script>
+    <script src="{% static 'js/swiper-bundle.min.js' %}"></script>
+    <script src="{% static 'js/owl.carousel.min.js' %}"></script>
+    <script src="{% static 'js/magnific-popup.min.js' %}"></script>
+    <script src="{% static 'js/huicalendar.js' %}"></script>
+    <script src="{% static 'js/parallax.min.js' %}"></script>
+    <script src="{% static 'js/backToTop.js' %}"></script>
+    <script src="{% static 'js/nice-select.min.js' %}"></script>
+    <script src="{% static 'js/counterup.min.js' %}"></script>
+    <script src="{% static 'js/ajax-form.js' %}"></script>
+    <script src="{% static 'js/wow.min.js' %}"></script>
+    <script src="{% static 'js/isotope.pkgd.min.js' %}"></script>
+    <script src="{% static 'js/imagesloaded.pkgd.min.js' %}"></script>
+    <script src="{% static 'js/main.js' %}"></script>
+
+
+</body></html>

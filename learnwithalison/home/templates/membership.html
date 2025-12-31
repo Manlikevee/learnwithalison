@@ -1,0 +1,423 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+
+   <main>
+      <!-- hero-area-start -->
+      <div class="hero-arera course-item-height" data-background="images/cv.jpg">
+         <div class="container">
+            <div class="row">
+               <div class="col-xl-12">
+                  <div class="hero-course-1-text">
+                     <h2>Membership Plan</h2>
+                  </div>
+                  <div class="course-title-breadcrumb">
+                     <nav>
+                        <ol class="breadcrumb">
+                           <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+                           <li class="breadcrumb-item"><span>Membership Plan</span></li>
+                        </ol>
+                     </nav>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+      <!-- hero-area-end -->
+      <!-- membership-area-start -->
+      <section class="membership-area pt-110">
+         <div class="container">
+            <div class="row justify-content-center">
+               <div class="col-xl-6 col-lg-6">
+                  <div class="section-title text-center mb-40">
+                     <h2>Membership Plan</h2>
+                     <p>Whether you're looking for smart course , start your next journey with course of
+                        famous instructors -- we have a plan for you.</p>
+                  </div>
+                  <div class="pricing-tab mb-60">
+                     <ul class="nav nav-tabs justify-content-center" id="priceTab" role="tablist">
+                        <li class="nav-item" role="presentation">
+                           <button class="nav-link active" id="monthly-tab" data-bs-toggle="tab" data-bs-target="#monthly" type="button" role="tab" aria-controls="monthly" aria-selected="true">monthly</button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                           <button class="nav-link" id="yearly-tab" data-bs-toggle="tab" data-bs-target="#yearly" type="button" role="tab" aria-controls="yearly" aria-selected="false">yearly</button>
+                        </li>
+                     </ul>
+                  </div>
+               </div>
+          <div class="tab-content" id="priceTabContent" style="visibility: visible; animation-delay: 0.5s; animation-name: fadeInUp;">
+
+  <!-- ================= MONTHLY PLANS ================= -->
+  <div class="tab-pane fade active show" id="monthly" role="tabpanel" aria-labelledby="monthly-tab">
+    <div class="row">
+
+      <!-- Starter -->
+      <div class="col-xl-3 col-lg-6 col-md-6">
+        <div class="membership-box mb-30">
+          <div class="membership-info">
+            <h4>Starter</h4>
+            <div class="membership-price">
+              <span>₦16,000</span>
+              <p>1 Course Access</p>
+            </div>
+            <div class="membership-list">
+              <ul>
+                <li><i class="far fa-check"></i>1 Course Only</li>
+                <li><i class="far fa-check"></i>Mobile Access</li>
+                <li><i class="far fa-check"></i>Beginner Lessons</li>
+                <li><i class="far fa-check"></i>Student Community</li>
+              </ul>
+            </div>
+          </div>
+          <a class="membership-btn" href="login.html">Choose plan</a>
+        </div>
+      </div>
+
+      <!-- Basic -->
+      <div class="col-xl-3 col-lg-6 col-md-6">
+        <div class="membership-box mb-30">
+          <div class="membership-info">
+            <h4>Basic</h4>
+            <div class="membership-price">
+              <span>₦32,000</span>
+              <p>2 Course Bundle</p>
+            </div>
+            <div class="membership-list">
+              <ul>
+                <li><i class="far fa-check"></i>2 Courses</li>
+                <li><i class="far fa-check"></i>Mobile & Desktop</li>
+                <li><i class="far fa-check"></i>Download Materials</li>
+                <li><i class="far fa-check"></i>Practice Questions</li>
+              </ul>
+            </div>
+          </div>
+          <a class="membership-btn" href="login.html">Choose plan</a>
+        </div>
+      </div>
+
+      <!-- Pro (Popular) -->
+      <div class="col-xl-3 col-lg-6 col-md-6">
+        <div class="membership-box mb-30">
+          <div class="membership-info">
+            <h4>Pro</h4>
+            <div class="membership-price">
+              <span>₦48,000</span>
+              <p>All Courses Access</p>
+            </div>
+            <div class="membership-list">
+              <ul>
+                <li><i class="far fa-check"></i>All Courses</li>
+                <li><i class="far fa-check"></i>Weekly Live Classes</li>
+                <li><i class="far fa-check"></i>Exam Prep Library</li>
+                <li><i class="far fa-check"></i>Assignments & Grading</li>
+              </ul>
+            </div>
+          </div>
+          <a class="membership-btn-active" href="#">Choose plan</a>
+          <div class="Popular-plan">
+            <span>Popular plan</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Premium -->
+      <div class="col-xl-3 col-lg-6 col-md-6">
+        <div class="membership-box mb-30">
+          <div class="membership-info">
+            <h4>Premium</h4>
+            <div class="membership-price">
+              <span>₦64,000</span>
+              <p>Mentorship Included</p>
+            </div>
+            <div class="membership-list">
+              <ul>
+                <li><i class="far fa-check"></i>All Courses</li>
+                <li><i class="far fa-check"></i>1-on-1 Mentor Support</li>
+                <li><i class="far fa-check"></i>Career Coaching</li>
+                <li><i class="far fa-check"></i>Certificates</li>
+                <li><i class="far fa-check"></i>Unlimited Downloads</li>
+              </ul>
+            </div>
+          </div>
+          <a class="membership-btn" href="login.html">Choose plan</a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ================= YEARLY PLANS ================= -->
+  <div class="tab-pane fade" id="yearly" role="tabpanel" aria-labelledby="yearly-tab">
+    <div class="row">
+
+      <!-- Starter -->
+      <div class="col-xl-3 col-lg-6 col-md-6">
+        <div class="membership-box mb-30">
+          <div class="membership-info">
+            <h4>Starter</h4>
+            <div class="membership-price">
+              <span>₦192,000</span>
+              <p>1 Course / Year</p>
+            </div>
+            <div class="membership-list">
+              <ul>
+                <li><i class="far fa-check"></i>1 Course Full Year</li>
+                <li><i class="far fa-check"></i>Beginner to Intermediate</li>
+                <li><i class="far fa-check"></i>Community Access</li>
+              </ul>
+            </div>
+          </div>
+          <a class="membership-btn" href="login.html">Choose plan</a>
+        </div>
+      </div>
+
+      <!-- Basic -->
+      <div class="col-xl-3 col-lg-6 col-md-6">
+        <div class="membership-box mb-30">
+          <div class="membership-info">
+            <h4>Basic</h4>
+            <div class="membership-price">
+              <span>₦384,000</span>
+              <p>2 Courses / Year</p>
+            </div>
+            <div class="membership-list">
+              <ul>
+                <li><i class="far fa-check"></i>2 Courses</li>
+                <li><i class="far fa-check"></i>Practice Tests</li>
+                <li><i class="far fa-check"></i>Download Notes</li>
+              </ul>
+            </div>
+          </div>
+          <a class="membership-btn" href="login.html">Choose plan</a>
+        </div>
+      </div>
+
+      <!-- Pro (Popular) -->
+      <div class="col-xl-3 col-lg-6 col-md-6">
+        <div class="membership-box mb-30">
+          <div class="membership-info">
+            <h4>Pro</h4>
+            <div class="membership-price">
+              <span>₦576,000</span>
+              <p>All Courses / Year</p>
+            </div>
+            <div class="membership-list">
+              <ul>
+                <li><i class="far fa-check"></i>All Courses</li>
+                <li><i class="far fa-check"></i>Live Revision Classes</li>
+                <li><i class="far fa-check"></i>Certificates</li>
+              </ul>
+            </div>
+          </div>
+          <a class="membership-btn-active" href="#">Choose plan</a>
+          <div class="Popular-plan">
+            <span>Popular plan</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Premium -->
+      <div class="col-xl-3 col-lg-6 col-md-6">
+        <div class="membership-box mb-30">
+          <div class="membership-info">
+            <h4>Premium</h4>
+            <div class="membership-price">
+              <span>₦768,000</span>
+              <p>Mentorship + Career Track</p>
+            </div>
+            <div class="membership-list">
+              <ul>
+                <li><i class="far fa-check"></i>All Courses</li>
+                <li><i class="far fa-check"></i>Personal Mentor</li>
+                <li><i class="far fa-check"></i>Exam & Career Coaching</li>
+                <li><i class="far fa-check"></i>Official Certificates</li>
+              </ul>
+            </div>
+          </div>
+          <a class="membership-btn" href="login.html">Choose plan</a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+</div>
+
+            </div>
+         </div>
+      </section>
+      <!-- membership-area-start -->
+
+
+      <!-- testimonial-area-start -->
+<div class="testimonial-area pt-80 pb-115">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-6 offset-lg-3">
+        <div class="section-title text-center mb-55">
+          <h2>What Students<br>
+            Think and Say About <span class="down-mark-line">Instructor Alison</span>
+          </h2>
+        </div>
+      </div>
+    </div>
+
+    <!-- Slider main container -->
+    <div class="swiper-container testimonial-active">
+      <div class="swiper-wrapper">
+
+        <!-- Slide 1 -->
+        <div class="swiper-slide">
+          <div class="testimonial-items position-relative">
+            <div class="testimonial-header">
+              <div class="testimonial-img">
+                <img src="https://avatar.iran.liara.run/username?username=Uzoamaka+Oluomachukwu+Immaculate" alt="Uzoamaka">
+              </div>
+              <div class="testimonial-title">
+                <h4>Uzoamaka Oluomachukwu Immaculate</h4>
+                <span>Microbiology / Biochemistry</span>
+              </div>
+            </div>
+
+            <div class="testimoni-quotes">
+              <img src="{% static 'images/quotes.png' %}" alt="quotes">
+            </div>
+
+            <div class="testimonial-body">
+              <h3>Life-Changing Support!</h3>
+              <p>
+                Struggling in year one, I joined Instructor Alison's tutorial center. His dedication led me to excel,
+                graduating with top honors. Grateful for his impactful guidance.
+              </p>
+            </div>
+
+            <div class="testimonial-icon">
+              <i class="fas fa-star"></i><i class="fas fa-star"></i>
+              <i class="fas fa-star"></i><i class="fas fa-star"></i>
+            </div>
+          </div>
+        </div>
+
+        <!-- Slide 2 -->
+        <div class="swiper-slide">
+          <div class="testimonial-items position-relative">
+            <div class="testimonial-header">
+              <div class="testimonial-img">
+                <img src="https://avatar.iran.liara.run/username?username=Hanna+Lisem" alt="Hanna Lisem">
+              </div>
+              <div class="testimonial-title">
+                <h4>Hanna Lisem</h4>
+                <span>Project Manager</span>
+              </div>
+            </div>
+
+            <div class="testimoni-quotes">
+              <img src="{% static 'images/quotes.png' %}" alt="quotes">
+            </div>
+
+            <div class="testimonial-body">
+              <h3>Outstanding Teaching!</h3>
+              <p>
+                Under Instructor Alison's tutelage, overcoming math challenges became a testimony. Graduating with an
+                upper credit, I'm grateful for his impactful teaching.
+              </p>
+            </div>
+
+            <div class="testimonial-icon">
+              <i class="fas fa-star"></i><i class="fas fa-star"></i>
+              <i class="fas fa-star"></i><i class="fas fa-star"></i>
+            </div>
+          </div>
+        </div>
+
+        <!-- Slide 3 -->
+        <div class="swiper-slide">
+          <div class="testimonial-items position-relative">
+            <div class="testimonial-header">
+              <div class="testimonial-img">
+                <img src="https://avatar.iran.liara.run/username?username=Franklin+Godknows+Kaizer" alt="Franklin Kaizer">
+              </div>
+              <div class="testimonial-title">
+                <h4>Franklin Godknows Kaizer</h4>
+                <span>Mathematics & Statistics</span>
+              </div>
+            </div>
+
+            <div class="testimoni-quotes">
+              <img src="{% static 'images/quotes.png' %}" alt="quotes">
+            </div>
+
+            <div class="testimonial-body">
+              <h3>Highly Recommended Mentor!</h3>
+              <p>
+                Grateful for Mr. Alison's exceptional tutoring in math and sciences, earning Distinction. His unique
+                teaching style and dedication fostered my academic success.
+              </p>
+            </div>
+
+            <div class="testimonial-icon">
+              <i class="fas fa-star"></i><i class="fas fa-star"></i>
+              <i class="fas fa-star"></i><i class="fas fa-star"></i>
+            </div>
+          </div>
+        </div>
+
+        <!-- Slide 4 -->
+        <div class="swiper-slide">
+          <div class="testimonial-items position-relative">
+            <div class="testimonial-header">
+              <div class="testimonial-img">
+                <img src="https://avatar.iran.liara.run/username?username=John+David" alt="John David">
+              </div>
+              <div class="testimonial-title">
+                <h4>John David</h4>
+                <span>National Diploma Graduate</span>
+              </div>
+            </div>
+
+            <div class="testimoni-quotes">
+              <img src="{% static 'images/quotes.png' %}" alt="quotes">
+            </div>
+
+            <div class="testimonial-body">
+              <h3>Remarkable Academic Journey!</h3>
+              <p>
+                Under Instructor Alison's guidance, my academic struggles transformed into excellence. I graduated with
+                distinction, earning a 3.67 GPA, and became Departmental President.
+              </p>
+            </div>
+
+            <div class="testimonial-icon">
+              <i class="fas fa-star"></i><i class="fas fa-star"></i>
+              <i class="fas fa-star"></i><i class="fas fa-star"></i>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Pagination -->
+      <div class="testimonial-pagination text-center"></div>
+    </div>
+  </div>
+</div>
+
+      <!-- testimonial-area-end -->
+
+
+   </main>
+
+
+
+
+<style>
+   .testimonial-img img {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    object-fit: cover;
+   }
+</style>
+
+{% endblock %}
