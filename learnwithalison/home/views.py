@@ -14,3 +14,5 @@ def contact(request):
 
 def membership(request):
     return render(request, 'membership.html')
+
+
