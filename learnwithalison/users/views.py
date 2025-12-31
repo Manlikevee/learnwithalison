@@ -2,7 +2,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
 from django.contrib import messages
-
+from django.contrib.auth.forms import PasswordResetForm
 
 def register_view(request):
     if request.method == 'POST':
@@ -82,3 +82,25 @@ def logout_view(request):
     logout(request)
     messages.success(request, "You have been logged out successfully.")
     return redirect("login")
+
+def custom_password_reset(request):
+    if request.method == 'POST':
+        form = PasswordResetForm(request.POST)
+
+        if form.is_valid():
+            form.save(
+                request=request,
+                use_https=request.is_secure(),
+                email_template_name='password_reset_email.html',
+                # subject='Password Reset Request'
+
+            )
+            messages.success(
+                request,
+                'If the email exists, a password reset link has been sent.'
+            )
+            return redirect('password_reset_done')
+    else:
+        form = PasswordResetForm()
+
+    return render(request, 'password_reset.html', {'form': form})

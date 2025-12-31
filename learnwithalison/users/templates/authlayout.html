@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<main>
+
+  <!-- Hero Area -->
+  <div class="hero-arera course-item-height"
+       style="background-image: url('{% static "images/cv.jpg" %}');">
+    <div class="container">
+      <div class="row">
+        <div class="col-xl-12">
+          <div class="hero-course-1-text">
+            <h2>{% block hero_title %}{% endblock %}</h2>
+          </div>
+          <div class="course-title-breadcrumb">
+            <nav>
+              <ol class="breadcrumb">
+                <li class="breadcrumb-item">
+                  <a href="{% url 'home' %}">Home</a>
+                </li>
+                <li class="breadcrumb-item">
+                  <span>{% block hero_breadcrumb %}{% endblock %}</span>
+                </li>
+              </ol>
+            </nav>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Auth Area -->
+  <div class="signin-page-area pt-120 pb-120">
+    <div class="container">
+      <div class="row justify-content-center">
+        <div class="col-xl-10 col-lg-10">
+
+          {% if messages %}
+            <div class="alert-container">
+              {% for message in messages %}
+                <div class="alert alert-{{ message.tags }} alert-dismissible fade show">
+                  {{ message }}
+                  <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                </div>
+              {% endfor %}
+            </div>
+          {% endif %}
+
+          {% block auth_content %}{% endblock %}
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+</main>
+{% endblock %}
