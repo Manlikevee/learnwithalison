@@ -53,15 +53,16 @@ checkSuperuser();
         <div class="sidenav-menu">
 
             <!-- Brand Logo -->
-            <a href="index.html" class="logo">
+            <a href="{% url 'admin_dashboard' %}" class="logo">
                 <span class="logo logo-light">
-                    <span class="logo-lg"><img src="{% static 'images/logo.png' %}" alt="logo"></span>
-                    <span class="logo-sm"><img src="{% static 'images/logo-sm.png' %}" alt="small logo"></span>
+<!--                        <img src="{% static 'graduation-cap.png' %}" alt="Logo" style="width:50px;">-->
+                    <span class="logo-lg"><img src="{% static 'graduation-cap.png' %}" alt="logo" style="width:60px; height:60px; object-fit:contain"></span>
+                    <span class="logo-sm"><img src="{% static 'graduation-cap.png' %}" alt="small logo" style="width:60px; height:60px;  object-fit:contain"></span>
                 </span>
 
                 <span class="logo logo-dark">
-                    <span class="logo-lg"><img src="{% static 'images/logo-black.png' %}" alt="dark logo"></span>
-                    <span class="logo-sm"><img src="{% static 'images/logo-sm.png' %}" alt="small logo"></span>
+                    <span class="logo-lg"><img src="{% static 'graduation-cap.png' %}" alt="dark logo" style="width:60px; height:60px;  object-fit:contain"></span>
+                    <span class="logo-sm"><img src="{% static 'graduation-cap.png' %}" alt="small logo" style="width:60px; height:60px;  object-fit:contain"></span>
                 </span>
             </a>
 
@@ -101,21 +102,21 @@ checkSuperuser();
 
       <!-- Logo -->
       <div class="logo-topbar">
-        <a href="index.html" class="logo-light">
+        <a href="{% url 'admin_dashboard' %}" class="logo-light">
           <span class="logo-lg">
-            <img src="{% static 'images/logo.png' %}" alt="logo">
+            <img src="{% static 'graduation-cap.png' %}" alt="small logo" style="width:60px; height:60px;  object-fit:contain">
           </span>
           <span class="logo-sm">
-            <img src="{% static 'images/logo-sm.png' %}" alt="logo">
+            <img src="{% static 'graduation-cap.png' %}" alt="small logo" style="width:60px; height:60px;  object-fit:contain">
           </span>
         </a>
 
-        <a href="index.html" class="logo-dark">
+        <a href="{% url 'admin_dashboard' %}" class="logo-dark">
           <span class="logo-lg">
-            <img src="{% static 'images/logo-black.png' %}" alt="logo">
+            <img src="{% static 'graduation-cap.png' %}" alt="small logo" style="width:60px; height:60px;  object-fit:contain">
           </span>
           <span class="logo-sm">
-            <img src="{% static 'images/logo-sm.png' %}" alt="logo">
+            <img src="{% static 'graduation-cap.png' %}" alt="small logo" style="width:60px; height:60px;  object-fit:contain">
           </span>
         </a>
       </div>
