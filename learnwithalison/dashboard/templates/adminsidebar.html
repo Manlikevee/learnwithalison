@@ -1,0 +1,166 @@
+
+{% load static %}
+
+<ul class="side-nav">
+
+  <!-- Dashboard -->
+  <li class="side-nav-item">
+    <a href="{% url 'admin_dashboard' %}" class="side-nav-link">
+      <span class="menu-icon"><i data-lucide="layout-dashboard"></i></span>
+      <span class="menu-text">Dashboard</span>
+    </a>
+  </li>
+
+  <!-- Courses -->
+  <li class="side-nav-item">
+    <a data-bs-toggle="collapse" href="#sidebarCourses" class="side-nav-link">
+      <span class="menu-icon"><i data-lucide="book-open"></i></span>
+      <span class="menu-text">Courses</span>
+      <span class="menu-arrow"></span>
+    </a>
+    <div class="collapse" id="sidebarCourses">
+      <ul class="sub-menu">
+        <li class="side-nav-item">
+          <a href="{% url 'admin_courses' %}" class="side-nav-link">
+            All Courses
+          </a>
+        </li>
+        <li class="side-nav-item">
+          <a href="{% url 'admin_course_create' %}" class="side-nav-link">
+            Add Course
+          </a>
+        </li>
+        <li class="side-nav-item">
+          <a href="{% url 'admin_categories' %}" class="side-nav-link">
+            Categories
+          </a>
+        </li>
+      </ul>
+    </div>
+  </li>
+
+  <!-- Students -->
+  <li class="side-nav-item">
+    <a href="{% url 'admin_students' %}" class="side-nav-link">
+      <span class="menu-icon"><i data-lucide="users"></i></span>
+      <span class="menu-text">Students</span>
+    </a>
+  </li>
+
+  <!-- Instructor -->
+  <li class="side-nav-item">
+    <a data-bs-toggle="collapse" href="#sidebarInstructor" class="side-nav-link">
+      <span class="menu-icon"><i data-lucide="user"></i></span>
+      <span class="menu-text">Instructor</span>
+      <span class="menu-arrow"></span>
+    </a>
+    <div class="collapse" id="sidebarInstructor">
+      <ul class="sub-menu">
+        <li class="side-nav-item">
+          <a href="{% url 'instructor_profile' %}" class="side-nav-link">
+            Profile
+          </a>
+        </li>
+        <li class="side-nav-item">
+          <a href="{% url 'instructor_courses' %}" class="side-nav-link">
+            Assigned Courses
+          </a>
+        </li>
+        <li class="side-nav-item">
+          <a href="{% url 'yearly_projection' %}" class="side-nav-link">
+            Earnings Projection
+          </a>
+        </li>
+      </ul>
+    </div>
+  </li>
+
+  <!-- Payments -->
+  <li class="side-nav-item">
+    <a data-bs-toggle="collapse" href="#sidebarPayments" class="side-nav-link">
+      <span class="menu-icon"><i data-lucide="credit-card"></i></span>
+      <span class="menu-text">Payments</span>
+      <span class="menu-arrow"></span>
+    </a>
+    <div class="collapse" id="sidebarPayments">
+      <ul class="sub-menu">
+        <li class="side-nav-item">
+          <a href="{% url 'admin_orders' %}" class="side-nav-link">
+            Orders
+          </a>
+        </li>
+        <li class="side-nav-item">
+          <a href="{% url 'admin_transactions' %}" class="side-nav-link">
+            Transactions
+          </a>
+        </li>
+        <li class="side-nav-item">
+          <a href="{% url 'admin_refunds' %}" class="side-nav-link">
+            Refunds
+          </a>
+        </li>
+      </ul>
+    </div>
+  </li>
+
+  <!-- Website -->
+  <li class="side-nav-item">
+    <a data-bs-toggle="collapse" href="#sidebarPages" class="side-nav-link">
+      <span class="menu-icon"><i data-lucide="file-text"></i></span>
+      <span class="menu-text">Website</span>
+      <span class="menu-arrow"></span>
+    </a>
+    <div class="collapse" id="sidebarPages">
+      <ul class="sub-menu">
+        <li class="side-nav-item">
+          <a href="{% url 'admin_pages' %}" class="side-nav-link">
+            Pages
+          </a>
+        </li>
+        <li class="side-nav-item">
+          <a href="{% url 'admin_faqs' %}" class="side-nav-link">
+            FAQs
+          </a>
+        </li>
+        <li class="side-nav-item">
+          <a href="{% url 'admin_testimonials' %}" class="side-nav-link">
+            Testimonials
+          </a>
+        </li>
+      </ul>
+    </div>
+  </li>
+
+  <!-- Support -->
+  <li class="side-nav-item">
+    <a href="{% url 'admin_support' %}" class="side-nav-link">
+      <span class="menu-icon"><i data-lucide="life-buoy"></i></span>
+      <span class="menu-text">Support Tickets</span>
+    </a>
+  </li>
+
+  <!-- Settings -->
+  <li class="side-nav-item">
+    <a href="{% url 'admin_settings' %}" class="side-nav-link">
+      <span class="menu-icon"><i data-lucide="settings"></i></span>
+      <span class="menu-text">Settings</span>
+    </a>
+  </li>
+
+  <!-- Profile -->
+  <li class="side-nav-item">
+    <a href="{% url 'admin_profile' %}" class="side-nav-link">
+      <span class="menu-icon"><i data-lucide="user-circle"></i></span>
+      <span class="menu-text">My Profile</span>
+    </a>
+  </li>
+
+  <!-- Logout -->
+  <li class="side-nav-item">
+    <a href="{% url 'logout' %}" class="side-nav-link text-danger">
+      <span class="menu-icon"><i data-lucide="log-out"></i></span>
+      <span class="menu-text">Logout</span>
+    </a>
+  </li>
+
+</ul>

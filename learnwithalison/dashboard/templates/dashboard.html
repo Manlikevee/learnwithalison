@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block content %}
-
+{% load humanize %}
     <main>
         <!-- hero-area-start -->
     <div class="hero-arera course-item-height" data-background="images/cv.jpg">
@@ -127,7 +127,7 @@
                                                             </svg>
                                                         </div>
                                                         <div class="count-number">
-                                                            <span class="counter">0</span>
+                                                            <span class="counter">{{ enrolled_courses_count }}</span>
                                                             <p>Online Courses</p>
                                                         </div>
                                                     </div>
@@ -151,7 +151,7 @@
                                                             </svg>
                                                         </div>
                                                         <div class="count-number">
-                                                            <span class="counter">0</span>
+                                                            <span class="counter">{{ active_courses_count }}</span>
                                                             <p>Active Courses</p>
                                                         </div>
                                                     </div>
@@ -268,280 +268,163 @@
 </ul>
 
                                 </div>
-                                <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">
-                                    <h4 class="mb-25">Enrolled Courses</h4>
-                                    <div class="student-profile-enroll">
-                                        <ul class="nav mb-30" id="myTab" role="tablist">
-                                            <li class="nav-item" role="presentation">
-                                                <button class="nav-link active" id="enrolled-tab" data-bs-toggle="tab" data-bs-target="#enrolled" type="button" role="tab" aria-controls="enrolled" aria-selected="true">Enrolled
-                                                    Courses (5)</button>
-                                            </li>
-                                            <li class="nav-item" role="presentation">
-                                                <button class="nav-link" id="active-tab" data-bs-toggle="tab" data-bs-target="#active" type="button" role="tab" aria-controls="active" aria-selected="false">Active Courses
-                                                    (2)</button>
-                                            </li>
-                                            <li class="nav-item" role="presentation">
-                                                <button class="nav-link" id="completed-tab" data-bs-toggle="tab" data-bs-target="#completed" type="button" role="tab" aria-controls="completed" aria-selected="false">Completed Courses
-                                                    (0)</button>
-                                            </li>
-                                        </ul>
-                                        <div class="tab-content" id="myTabContent">
-                                            <div class="tab-pane fade show active" id="enrolled" role="tabpanel" aria-labelledby="enrolled-tab">
-                                                <div class="student-profile-enrolled-course">
-                                                    <div class="row">
-                                                        <!-- <div class="col-xl-4 col-lg-6 col-md-6">
-                                                            <div class="course-wrapper-2 mb-30">
-                                                                <div class="student-course-img">
-                                                                    <img src="{% static 'images/course-04.jpg' %}" alt="course-img">
-                                                                </div>
-                                                                <div class="course-cart">
-                                                                    <div class="course-info-wrapper">
-                                                                        <div class="cart-info-body">
-                                                                            <span class="category-color category-color-3"><a href="course.html">Business</a></span>
-                                                                            <a href="course-details.html">
-                                                                                <h3>MySQL Database : Beginner SQL
-                                                                                    Database Design</h3>
-                                                                            </a>
-                                                                            <div class="cart-lavel">
-                                                                                <h5>Level : <span>Beginner</span></h5>
-                                                                                <p>Knowledge is power. Information is
-                                                                                    liberating. Education is the premise
-                                                                                    of
-                                                                                    progress, in every society, in every
-                                                                                    family</p>
-                                                                            </div>
-                                                                            <div class="info-cart-text">
-                                                                                <ul>
-                                                                                    <li><i class="far fa-check"></i>Scratch
-                                                                                        to HTML</li>
-                                                                                    <li><i class="far fa-check"></i>Learn
-                                                                                        how to code in Python</li>
-                                                                                    <li><i class="far fa-check"></i>Unlimited
-                                                                                        backend database creation</li>
-                                                                                    <li><i class="far fa-check"></i>Adobe
-                                                                                        XD Tutorials</li>
-                                                                                </ul>
-                                                                            </div>
-                                                                            <div class="course-action">
-                                                                                <a href="course-details.html" class="view-details-btn">View
-                                                                                    Details</a>
-                                                                                <button class="wishlist-btn"><i class="flaticon-like"></i></button>
-                                                                                <a href="course-details.html" class="c-share-btn"><i class="flaticon-previous"></i></a>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="student-course-footer">
-                                                                    <div class="student-course-linkter">
-                                                                        <div class="course-lessons">
-                                                                            <svg xmlns="http://www.w3.org/2000/svg" width="16.471" height="16.471" viewBox="0 0 16.471 16.471">
-                                                                                <g id="blackboard-.0" transform="translate(-0.008)">
-                                                                                    <path id="Path_002" data-name="Path 101" d="M16,1.222H8.726V.483a.483.483,0,1,0-.965,0v.74H.491A.483.483,0,0,0,.008,1.7V13.517A.483.483,0,0,0,.491,14H5.24L4.23,15.748a.483.483,0,1,0,.836.483L6.354,14H7.761v1.99a.483.483,0,0,0,.965,0V14h1.407l1.288,2.231a.483.483,0,1,0,.836-.483L11.247,14H16a.483.483,0,0,0,.483-.483V1.7A.483.483,0,0,0,16,1.222Zm-.483.965v8.905H.973V2.187Zm0,10.847H.973v-.976H15.514Z" fill="#575757"></path>
-                                                                                </g>
-                                                                            </svg>
-                                                                            <span class="ms-2">12 Lessons</span>
-                                                                        </div>
-                                                                        <div class="portfolio-price">
-                                                                            <span>$147.00</span>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="student-course-text">
-                                                                        <h3><a href="course-details.html">MySQL Database
-                                                                                : Beginner SQL Database Design</a>
-                                                                        </h3>
-                                                                    </div>
-                                                                    <div class="portfolio-user">
-                                                                        <div class="user-icon">
-                                                                            <a href="instructor-profile.html"><i class="fas fa-user"></i>Danial</a>
-                                                                        </div>
-                                                                        <div class="course-icon">
-                                                                            <i class="fas fa-star"></i>
-                                                                            <i class="fas fa-star"></i>
-                                                                            <i class="fas fa-star"></i>
-                                                                            <i class="fas fa-star"></i>
-                                                                            <i class="fal fa-star"></i>
-                                                                            <span>(25)</span>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div> -->
+                <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">
+    <h4 class="mb-25">Enrolled Courses</h4>
 
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="tab-pane fade" id="active" role="tabpanel" aria-labelledby="active-tab">
-                                                <div class="student-profile-enrolled-course">
-                                                    <div class="row">
-                                                        <!-- <div class="col-xl-4 col-lg-6 col-md-6">
-                                                            <div class="course-wrapper-2 mb-30">
-                                                                <div class="student-course-img">
-                                                                    <img src="{% static 'images/course-07.jpg' %}" alt="course-img">
-                                                                </div>
-                                                                <div class="course-cart">
-                                                                    <div class="course-info-wrapper">
-                                                                        <div class="cart-info-body">
-                                                                            <span class="category-color category-color-2"><a href="course.html">Life
-                                                                                    Style</a></span>
-                                                                            <a href="course-details.html">
-                                                                                <h3>Become a Super Human: Naturally &
-                                                                                    Safely Boost Testosterone</h3>
-                                                                            </a>
-                                                                            <div class="cart-lavel">
-                                                                                <h5>Level : <span>Beginner</span></h5>
-                                                                                <p>Knowledge is power. Information is
-                                                                                    liberating. Education is the premise
-                                                                                    of
-                                                                                    progress, in every society, in every
-                                                                                    family</p>
-                                                                            </div>
-                                                                            <div class="info-cart-text">
-                                                                                <ul>
-                                                                                    <li><i class="far fa-check"></i>Scratch
-                                                                                        to HTML</li>
-                                                                                    <li><i class="far fa-check"></i>Learn
-                                                                                        how to code in Python</li>
-                                                                                    <li><i class="far fa-check"></i>Unlimited
-                                                                                        backend database creation</li>
-                                                                                    <li><i class="far fa-check"></i>Adobe
-                                                                                        XD Tutorials</li>
-                                                                                </ul>
-                                                                            </div>
-                                                                            <div class="course-action">
-                                                                                <a href="course-details.html" class="view-details-btn">View
-                                                                                    Details</a>
-                                                                                <button class="wishlist-btn"><i class="flaticon-like"></i></button>
-                                                                                <a href="course-details.html" class="c-share-btn"><i class="flaticon-previous"></i></a>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="student-course-footer">
-                                                                    <div class="student-course-linkter">
-                                                                        <div class="course-lessons">
-                                                                            <svg xmlns="http://www.w3.org/2000/svg" width="16.471" height="16.471" viewBox="0 0 16.471 16.471">
-                                                                                <g id="blackboard-666" transform="translate(-0.008)">
-                                                                                    <path id="Path_10765" data-name="Path 101" d="M16,1.222H8.726V.483a.483.483,0,1,0-.965,0v.74H.491A.483.483,0,0,0,.008,1.7V13.517A.483.483,0,0,0,.491,14H5.24L4.23,15.748a.483.483,0,1,0,.836.483L6.354,14H7.761v1.99a.483.483,0,0,0,.965,0V14h1.407l1.288,2.231a.483.483,0,1,0,.836-.483L11.247,14H16a.483.483,0,0,0,.483-.483V1.7A.483.483,0,0,0,16,1.222Zm-.483.965v8.905H.973V2.187Zm0,10.847H.973v-.976H15.514Z" fill="#575757"></path>
-                                                                                </g>
-                                                                            </svg>
-                                                                            <span class="ms-2">12 Lessons</span>
-                                                                        </div>
-                                                                        <div class="portfolio-price">
-                                                                            <span>$48.00</span>
-                                                                            <del>$24.50</del>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="student-course-text">
-                                                                        <h3><a href="course-details.html">Become a Super
-                                                                                Human: Naturally & Safely Boost
-                                                                                Testosterone</a></h3>
-                                                                    </div>
-                                                                    <div class="portfolio-user">
-                                                                        <div class="user-icon">
-                                                                            <a href="instructor-profile.html"><i class="fas fa-user"></i>Edyal
-                                                                                Romel</a>
-                                                                        </div>
-                                                                        <div class="course-icon">
-                                                                            <i class="fas fa-star"></i>
-                                                                            <i class="fas fa-star"></i>
-                                                                            <i class="fas fa-star"></i>
-                                                                            <i class="fas fa-star"></i>
-                                                                            <i class="fal fa-star"></i>
-                                                                            <span>(25)</span>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-xl-4 col-lg-6 col-md-6">
-                                                            <div class="course-wrapper-2 mb-30">
-                                                                <div class="student-course-img">
-                                                                    <img src="{% static 'images/course-08.jpg' %}" alt="course-img">
-                                                                </div>
-                                                                <div class="course-cart">
-                                                                    <div class="course-info-wrapper">
-                                                                        <div class="cart-info-body">
-                                                                            <span class="category-color category-color-1"><a href="course.html">Development</a></span>
-                                                                            <a href="course-details.html">
-                                                                                <h3>Python and Django Full Stack Web
-                                                                                    Developer Bootcamp</h3>
-                                                                            </a>
-                                                                            <div class="cart-lavel">
-                                                                                <h5>Level : <span>Beginner</span></h5>
-                                                                                <p>Knowledge is power. Information is
-                                                                                    liberating. Education is the premise
-                                                                                    of
-                                                                                    progress, in every society, in every
-                                                                                    family</p>
-                                                                            </div>
-                                                                            <div class="info-cart-text">
-                                                                                <ul>
-                                                                                    <li><i class="far fa-check"></i>Scratch
-                                                                                        to HTML</li>
-                                                                                    <li><i class="far fa-check"></i>Learn
-                                                                                        how to code in Python</li>
-                                                                                    <li><i class="far fa-check"></i>Unlimited
-                                                                                        backend database creation</li>
-                                                                                    <li><i class="far fa-check"></i>Adobe
-                                                                                        XD Tutorials</li>
-                                                                                </ul>
-                                                                            </div>
-                                                                            <div class="course-action">
-                                                                                <a href="course-details.html" class="view-details-btn">View
-                                                                                    Details</a>
-                                                                                <button class="wishlist-btn"><i class="flaticon-like"></i></button>
-                                                                                <a href="course-details.html" class="c-share-btn"><i class="flaticon-previous"></i></a>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="student-course-footer">
-                                                                    <div class="student-course-linkter">
-                                                                        <div class="course-lessons">
-                                                                            <svg xmlns="http://www.w3.org/2000/svg" width="16.471" height="16.471" viewBox="0 0 16.471 16.471">
-                                                                                <g id="blackboard-633" transform="translate(-0.008)">
-                                                                                    <path id="Path_1000" data-name="Path 101" d="M16,1.222H8.726V.483a.483.483,0,1,0-.965,0v.74H.491A.483.483,0,0,0,.008,1.7V13.517A.483.483,0,0,0,.491,14H5.24L4.23,15.748a.483.483,0,1,0,.836.483L6.354,14H7.761v1.99a.483.483,0,0,0,.965,0V14h1.407l1.288,2.231a.483.483,0,1,0,.836-.483L11.247,14H16a.483.483,0,0,0,.483-.483V1.7A.483.483,0,0,0,16,1.222Zm-.483.965v8.905H.973V2.187Zm0,10.847H.973v-.976H15.514Z" fill="#575757"></path>
-                                                                                </g>
-                                                                            </svg>
-                                                                            <span class="ms-2">12 Lessons</span>
-                                                                        </div>
-                                                                        <div class="portfolio-price">
-                                                                            <span>FREE</span>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="student-course-text">
-                                                                        <h3><a href="course-details.html">Python and
-                                                                                Django Full Stack Web Developer
-                                                                                Bootcamp</a></h3>
-                                                                    </div>
-                                                                    <div class="portfolio-user">
-                                                                        <div class="user-icon">
-                                                                            <a href="3"><i class="fas fa-user"></i>Junior
-                                                                                Lucy</a>
-                                                                        </div>
-                                                                        <div class="course-icon">
-                                                                            <i class="fas fa-star"></i>
-                                                                            <i class="fas fa-star"></i>
-                                                                            <i class="fas fa-star"></i>
-                                                                            <i class="fas fa-star"></i>
-                                                                            <i class="fal fa-star"></i>
-                                                                            <span>(25)</span>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div> -->
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="tab-pane fade" id="completed" role="tabpanel" aria-labelledby="completed-tab">
-                                                <div class="student-profile-enrolled-course">
-                                                    <p>No course completed yet.</p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
+    <div class="student-profile-enroll">
+
+        <style>
+          .course-desc {
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            min-height: 40px;
+          }
+        </style>
+
+        <!-- TABS -->
+        <ul class="nav mb-30" role="tablist">
+            <li class="nav-item">
+                <button class="nav-link active"
+                        data-bs-toggle="tab"
+                        data-bs-target="#enrolled">
+                    Enrolled Courses ({{ enrolled_courses|length }})
+                </button>
+            </li>
+            <li class="nav-item">
+                <button class="nav-link"
+                        data-bs-toggle="tab"
+                        data-bs-target="#active">
+                    Active Courses ({{ active_courses|length }})
+                </button>
+            </li>
+            <li class="nav-item">
+                <button class="nav-link"
+                        data-bs-toggle="tab"
+                        data-bs-target="#completed">
+                    Completed Courses ({{ completed_courses|length }})
+                </button>
+            </li>
+        </ul>
+
+        <!-- TAB CONTENT -->
+        <div class="tab-content">
+
+            <!-- ENROLLED COURSES -->
+            <div class="tab-pane fade show active" id="enrolled">
+                <div class="row g-3">
+                    {% for course in enrolled_courses %}
+                    <div class="col-xl-4 col-lg-6 col-md-6 course-item"
+                         data-search="{{ course.title|lower }} {{ course.category.name|lower }} {{ course.short_description|lower }}">
+
+                        <div class="card h-100">
+
+                            {% if course.thumbnail %}
+                                <img src="{{ course.thumbnail.url }}"
+                                     class="card-img-top"
+                                     style="height:160px; object-fit:cover;"
+                                     alt="{{ course.title }}">
+                            {% else %}
+                                <div class="bg-light d-flex align-items-center justify-content-center"
+                                     style="height:160px;">
+                                    <i class="ti ti-photo text-muted fs-1"></i>
                                 </div>
+                            {% endif %}
+
+                            <div class="card-body d-flex flex-column">
+
+                                <div class="d-flex justify-content-between align-items-start">
+                                    <span class="badge bg-primary-subtle text-primary fs-xxs p-2">
+                                        {{ course.category.name }}
+                                    </span>
+                                </div>
+
+                                <h5 class="fw-semibold mt-2">{{ course.title }}</h5>
+
+                                <p class="text-muted fs-sm course-desc flex-grow-1">
+                                    {{ course.short_description|default:"No description available" }}
+                                </p>
+
+                                <div class="d-flex justify-content-between align-items-center mt-2">
+                                    <h6 class="mb-0 fw-bold">
+                                        {% if course.price_type == 'free' %}
+                                            Free
+                                        {% else %}
+                                            ${{ course.price|intcomma }}
+                                        {% endif %}
+                                    </h6>
+
+                                    <a href="{% url 'course_detail' course.id %}"
+                                       class="btn btn-sm btn-primary">
+                                        View
+                                    </a>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                    {% empty %}
+                        <p>You have not enrolled in any course yet.</p>
+                    {% endfor %}
+                </div>
+            </div>
+
+            <!-- ACTIVE COURSES -->
+            <div class="tab-pane fade" id="active">
+                <div class="row g-3">
+                    {% for course in active_courses %}
+                    <div class="col-xl-4 col-lg-6 col-md-6 course-item">
+                        <div class="card h-100">
+
+                            {% if course.thumbnail %}
+                                <img src="{{ course.thumbnail.url }}"
+                                     class="card-img-top"
+                                     style="height:160px; object-fit:cover;">
+                            {% else %}
+                                <div class="bg-light d-flex align-items-center justify-content-center"
+                                     style="height:160px;">
+                                    <i class="ti ti-photo text-muted fs-1"></i>
+                                </div>
+                            {% endif %}
+
+                            <div class="card-body d-flex flex-column">
+                                <h5 class="fw-semibold">{{ course.title }}</h5>
+                                <a href="{% url 'course_detail' course.id %}"
+                                   class="btn btn-sm btn-primary mt-auto">
+                                    Continue
+                                </a>
+                            </div>
+
+                        </div>
+                    </div>
+                    {% empty %}
+                        <p>No active courses at the moment.</p>
+                    {% endfor %}
+                </div>
+            </div>
+
+            <!-- COMPLETED COURSES -->
+            <div class="tab-pane fade" id="completed">
+                <div class="row g-3">
+                    {% for course in completed_courses %}
+                    <div class="col-xl-4 col-lg-6 col-md-6">
+                        <div class="card h-100 text-center p-4">
+                            <h5>{{ course.title }}</h5>
+                            <span class="badge bg-success mt-2">Completed</span>
+                        </div>
+                    </div>
+                    {% empty %}
+                        <p>No course completed yet.</p>
+                    {% endfor %}
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
                                 <div class="tab-pane fade" id="wishlist" role="tabpanel" aria-labelledby="wishlist-tab">
                                     <h4 class="mb-25">Wishlist</h4>
                                     <div class="student-profile-wishlist">
@@ -659,37 +542,78 @@
                                 <div class="tab-pane fade" id="quiz" role="tabpanel" aria-labelledby="quiz-tab">
                                     <p>No quiz attempts yet.</p>
                                 </div>
-                                <div class="tab-pane fade" id="history" role="tabpanel" aria-labelledby="history-tab">
-                                    <h4 class="mb-25">Order History</h4>
-                                    <div class="student-profile-orders-wrapper">
-                                        <div class="student-profile-orders">
-                                            <div class="student-profile-order custom-height-80">
-                                                <div class="student-profile-order-name">
-                                                    <span>Basic</span>
-                                                </div>
-                                                <div class="student-profile-order-price">
-                                                    <span>20000</span>
-                                                </div>
-                                                <div class="student-profile-order-duration">
-                                                    <span>Quarterly</span>
-                                                </div>
-                                                <div class="student-profile-order-status">
-                                                    <span>verified</span>
-                                                </div>
-                                                <div class="student-profile-order-method">
-                                                    <span>sslcommerz</span>
-                                                </div>
-                                                <div class="student-profile-order-date">
-                                                    <span>20-06-2025</span>
-                                                </div>
-                                                <div class="student-profile-order-renew">
-                                                    <button type="button" class="edu-btn">Renew</button>
-                                                </div>
-                                            </div>
+                    <div class="tab-pane fade" id="history" role="tabpanel" aria-labelledby="history-tab">
+    <h4 class="mb-25">Order History</h4>
 
-                                        </div>
-                                    </div>
-                                </div>
+    <div class="student-profile-orders-wrapper">
+        <div class="student-profile-orders">
+
+            {% for order in order_history %}
+            <div class="student-profile-order custom-height-80">
+
+                <!-- COURSE NAME -->
+                <div class="student-profile-order-name">
+                    <span>{{ order.course.title }}</span>
+                </div>
+
+                <!-- PRICE -->
+                <div class="student-profile-order-price">
+                    <span>
+                        {% if order.amount %}
+                            {{ order.amount|floatformat:2 }}
+                        {% else %}
+                            Free
+                        {% endif %}
+                    </span>
+                </div>
+
+
+
+                <!-- STATUS -->
+                <div class="student-profile-order-status">
+                    {% if order.status == 'completed' %}
+                        <span class="text-success">Completed</span>
+                    {% elif order.status == 'pending' %}
+                        <span class="text-warning">Pending</span>
+                    {% elif order.status == 'failed' %}
+                        <span class="text-danger">Failed</span>
+                    {% elif order.status == 'refunded' %}
+                        <span class="text-info">Refunded</span>
+                    {% endif %}
+                </div>
+
+                <!-- PAYMENT METHOD -->
+                <div class="student-profile-order-method">
+                    <span>Online</span>
+                </div>
+
+                <!-- DATE -->
+                <div class="student-profile-order-date">
+                    <span>{{ order.created_at|date:"d-m-Y" }}</span>
+                </div>
+
+                <!-- ACTION -->
+                <div class="student-profile-order-renew">
+                    {% if order.status == 'completed' %}
+                        <a href="{% url 'course_detail' order.course.id %}" class="edu-btn">
+                            View Course
+                        </a>
+                    {% elif order.status == 'pending' %}
+                        <span class="text-muted">Processing</span>
+                    {% else %}
+                        <span class="text-muted">—</span>
+                    {% endif %}
+                </div>
+
+            </div>
+            {% empty %}
+            <p>You have not made any purchases yet.</p>
+            {% endfor %}
+
+        </div>
+    </div>
+</div>
+
                                 <div class="tab-pane fade" id="ques" role="tabpanel" aria-labelledby="ques-tab">
                                     <p>No question completed yet.</p>
                                 </div>

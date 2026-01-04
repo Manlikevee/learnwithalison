@@ -50,7 +50,7 @@ def login_view(request):
 
         user = None
 
-        # Check if input is email
+        # ✅ Check if input is email
         if '@' in username_or_email:
             try:
                 user_obj = User.objects.get(email=username_or_email)
@@ -62,7 +62,7 @@ def login_view(request):
             except User.DoesNotExist:
                 user = None
         else:
-            # Treat as username
+            # ✅ Treat as username
             user = authenticate(
                 request,
                 username=username_or_email,
@@ -71,13 +71,19 @@ def login_view(request):
 
         if user is not None:
             login(request, user)
+
+            # 🔥 SUPERUSER REDIRECT
+            if user.is_superuser:
+                return redirect('admin_dashboard')
+
+            # 👤 NORMAL USER REDIRECT
             return redirect('dashboard')
+
         else:
             messages.error(request, 'Invalid username/email or password')
             return redirect('login')
 
     return render(request, 'login.html')
-
 def logout_view(request):
     logout(request)
     messages.success(request, "You have been logged out successfully.")

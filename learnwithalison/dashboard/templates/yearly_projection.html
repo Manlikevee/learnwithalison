@@ -1,0 +1,101 @@
+{% extends 'dashlayout.html' %}
+{% load static %}
+{% block content %}
+{% load json_extras %}
+{% load humanize %}
+<div class="container-fluid">
+
+  <!-- PAGE TITLE -->
+  <div class="page-title-head d-flex align-items-center">
+    <div class="flex-grow-1">
+      <h4 class="fs-xl fw-bold m-0">
+        Yearly Revenue Projection — {{ year }}
+      </h4>
+    </div>
+
+    <ol class="breadcrumb m-0 py-0">
+      <li class="breadcrumb-item">
+        <a href="{% url 'admin_dashboard' %}">Dashboard</a>
+      </li>
+      <li class="breadcrumb-item active">
+        Projections
+      </li>
+    </ol>
+  </div>
+
+  <!-- FORM -->
+  <form method="POST" class="mt-4">
+    {% csrf_token %}
+
+    <div class="row g-3">
+
+      <!-- MONTHLY INPUTS -->
+      <div class="col-xl-8">
+        <div class="card">
+          <div class="card-header">
+            <h5 class="card-title mb-0">Monthly Projected Amounts</h5>
+          </div>
+
+          <div class="card-body">
+            <div class="row g-3">
+
+              {% for month in months %}
+              <div class="col-md-6">
+                <label class="form-label">{{ month }}</label>
+                <input
+                  type="number"
+                  step="0.01"
+                  name="{{ month }}"
+                  class="form-control"
+                  value="{{ projection.monthly_projection|get_item:month }}"
+                >
+              </div>
+              {% endfor %}
+
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SUMMARY -->
+      <div class="col-xl-4">
+        <div class="card">
+          <div class="card-header">
+            <h5 class="card-title mb-0">Summary</h5>
+          </div>
+
+          <div class="card-body">
+            <p class="text-muted mb-2">Year</p>
+            <h5 class="fw-bold">{{ year }}</h5>
+
+            <hr>
+
+            <p class="text-muted mb-2">Total Projected</p>
+            <h4 class="fw-bold text-primary">
+         {{ total_projected_amount|floatformat:2|intcomma }}
+            </h4>
+
+            <small class="text-muted">
+              Automatically calculated from monthly values
+            </small>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- ACTIONS -->
+    <div class="mt-4 d-flex justify-content-end gap-3">
+      <a href="{% url 'admin_dashboard' %}" class="btn btn-light btn-lg">
+        Cancel
+      </a>
+      <button type="submit" class="btn btn-primary btn-lg px-5">
+        Save Projections
+      </button>
+    </div>
+
+  </form>
+
+</div>
+
+{% endblock %}

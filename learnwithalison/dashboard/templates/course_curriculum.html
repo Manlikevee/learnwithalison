@@ -1,0 +1,224 @@
+{% extends 'dashlayout.html' %}
+{% load static %}
+{% block content %}
+
+<div class="container-fluid">
+
+  <!-- PAGE TITLE -->
+  <div class="page-title-head d-flex align-items-center mb-3">
+    <div class="flex-grow-1">
+      <h4 class="fs-xl fw-bold m-0">
+        Course Curriculum — {{ course.title }}
+      </h4>
+    </div>
+
+    <div class="d-flex gap-2">
+      <a href="{% url 'admin_courses' %}" class="btn btn-success btn-sm">
+        Save & Exit
+      </a>
+      <a href="{% url 'admin_courses' %}" class="btn btn-light btn-sm">
+        ← Back to Courses
+      </a>
+    </div>
+  </div>
+
+  <!-- ADD SECTION -->
+  <div class="card mb-4">
+    <div class="card-header">
+      <h5 class="card-title mb-0">Add Section</h5>
+    </div>
+    <div class="card-body">
+      <form id="sectionForm">
+        {% csrf_token %}
+        <div class="row g-2">
+          <div class="col-md-10">
+            <input type="text"
+                   name="title"
+                   class="form-control"
+                   placeholder="Section title (e.g. Introduction)"
+                   required>
+          </div>
+          <div class="col-md-2">
+            <button class="btn btn-primary w-100">
+              Add Section
+            </button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- SECTIONS -->
+  {% for section in course.sections.all %}
+  <div class="card mb-4">
+    <div class="card-header">
+      <h5 class="mb-0">{{ section.title }}</h5>
+    </div>
+
+    <div class="card-body">
+
+      <!-- LESSON LIST -->
+      {% for lesson in section.lessons.all %}
+        <div class="d-flex justify-content-between align-items-center border rounded p-2 mb-2">
+          <div>
+            <strong>{{ lesson.title }}</strong><br>
+            <small class="text-muted">{{ lesson.duration }}</small>
+          </div>
+          <span class="badge bg-success-subtle text-success">
+            Uploaded
+          </span>
+        </div>
+      {% empty %}
+        <p class="text-muted">No lessons yet.</p>
+      {% endfor %}
+
+      <!-- ADD LESSON -->
+      <form class="lesson-form mt-3" enctype="multipart/form-data">
+        {% csrf_token %}
+
+        <input type="hidden" name="section" value="{{ section.id }}">
+        <input type="hidden" name="duration" class="lesson-duration">
+
+        <div class="row g-2 align-items-end">
+          <div class="col-md-4">
+            <label class="form-label">Lesson Title</label>
+            <input type="text"
+                   name="title"
+                   class="form-control"
+                   required>
+          </div>
+
+          <div class="col-md-5">
+            <label class="form-label">Video File</label>
+            <input type="file"
+                   name="video"
+                   class="form-control"
+                   accept="video/*"
+                   required>
+          </div>
+
+          <div class="col-md-3">
+            <button class="btn btn-primary w-100">
+              Upload Lesson
+            </button>
+          </div>
+        </div>
+
+        <!-- PROGRESS BAR -->
+        <div class="progress mt-3 d-none" style="height: 20px;">
+          <div class="progress-bar progress-bar-striped progress-bar-animated"
+               style="width:0%">
+            0%
+          </div>
+        </div>
+      </form>
+
+    </div>
+  </div>
+  {% endfor %}
+
+</div>
+
+<!-- ================= JAVASCRIPT ================= -->
+<script>
+
+/* ================= CREATE SECTION ================= */
+document.getElementById("sectionForm").addEventListener("submit", function (e) {
+  e.preventDefault();
+
+  const formData = new FormData(this);
+
+  fetch("{% url 'admin_course_section_create' course.id %}", {
+    method: "POST",
+    headers: {
+      "X-CSRFToken": document.querySelector("[name=csrfmiddlewaretoken]").value
+    },
+    body: formData
+  })
+  .then(res => res.json())
+  .then(data => {
+    if (data.success) location.reload();
+    else alert("Failed to create section");
+  });
+});
+
+
+/* ================= LESSON UPLOAD + DURATION ================= */
+document.querySelectorAll(".lesson-form").forEach(form => {
+
+  const videoInput = form.querySelector('input[type="file"]');
+  const durationInput = form.querySelector(".lesson-duration");
+  const progress = form.querySelector(".progress");
+  const bar = progress.querySelector(".progress-bar");
+
+  // Read video duration
+  videoInput.addEventListener("change", function () {
+    const file = this.files[0];
+    if (!file) return;
+
+    const video = document.createElement("video");
+    video.preload = "metadata";
+    video.src = URL.createObjectURL(file);
+
+    video.onloadedmetadata = function () {
+      URL.revokeObjectURL(video.src);
+
+      const seconds = Math.floor(video.duration);
+      const minutes = Math.floor(seconds / 60);
+      const remaining = seconds % 60;
+
+      durationInput.value =
+        minutes + "m " + String(remaining).padStart(2, "0") + "s";
+    };
+  });
+
+  // Upload lesson
+  form.addEventListener("submit", function (e) {
+    e.preventDefault();
+
+    const formData = new FormData(form);
+    const xhr = new XMLHttpRequest();
+
+    xhr.open("POST", "{% url 'admin_course_lesson_upload' course.id %}");
+
+    xhr.setRequestHeader(
+      "X-CSRFToken",
+      document.querySelector("[name=csrfmiddlewaretoken]").value
+    );
+
+    progress.classList.remove("d-none");
+    bar.style.width = "0%";
+    bar.textContent = "0%";
+
+    xhr.upload.onprogress = function (e) {
+      if (e.lengthComputable) {
+        const percent = Math.round((e.loaded / e.total) * 100);
+        bar.style.width = percent + "%";
+        bar.textContent = percent + "%";
+      }
+    };
+
+    xhr.onload = function () {
+      if (xhr.status === 200) {
+        bar.classList.remove("progress-bar-animated");
+        bar.classList.add("bg-success");
+        bar.textContent = "Upload complete";
+        setTimeout(() => location.reload(), 600);
+      } else {
+        bar.classList.add("bg-danger");
+        bar.textContent = "Upload failed";
+      }
+    };
+
+    xhr.onerror = function () {
+      bar.classList.add("bg-danger");
+      bar.textContent = "Error";
+    };
+
+    xhr.send(formData);
+  });
+
+});
+</script>
+
+{% endblock %}

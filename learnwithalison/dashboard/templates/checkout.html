@@ -1,0 +1,88 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load humanize %}
+{% block content %}
+
+<main>
+
+  <!-- HERO -->
+  <div class="hero-arera course-item-height">
+    <div class="container">
+      <h2 class="text-center">Checkout</h2>
+    </div>
+  </div>
+
+  <!-- CHECKOUT -->
+  <section class="cart-area pt-100 pb-100">
+    <div class="container">
+
+      <div class="row">
+        <!-- ORDER SUMMARY -->
+        <div class="col-lg-8">
+          <div class="table-content table-responsive">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>Course</th>
+                  <th>Price</th>
+                </tr>
+              </thead>
+              <tbody>
+
+                {% for item in cart_items %}
+                <tr>
+                  <td>
+                    <strong>{{ item.course.title }}</strong><br>
+                    <small class="text-muted">
+                      {{ item.course.level|title }}
+                    </small>
+                  </td>
+                  <td>
+                    ${{ item.course.price|intcomma }}
+                  </td>
+                </tr>
+                {% endfor %}
+
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- TOTAL -->
+        <div class="col-lg-4">
+          <div class="cart-page-total">
+            <h2>Order Summary</h2>
+
+            <ul class="mb-20">
+              <li>
+                Subtotal
+                <span>${{ total_amount|intcomma }}</span>
+              </li>
+              <li>
+                Total
+                <span>${{ total_amount|intcomma }}</span>
+              </li>
+            </ul>
+
+            <form method="POST">
+              {% csrf_token %}
+              <button type="submit" class="edu-btn w-100">
+                Confirm & Pay
+              </button>
+            </form>
+
+            <a href="{% url 'cart' %}"
+               class="edu-border-btn w-100 mt-10">
+              Back to Cart
+            </a>
+
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+</main>
+
+{% endblock %}

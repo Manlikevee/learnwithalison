@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+<main>
+  <div class="content-error-area pt-120 pb-120">
+    <div class="container">
+      <div class="row justify-content-center">
+        <div class="col-xl-8">
+          <div class="content-error-item text-center">
+
+            <div class="error-thumb mb-30">
+           <img src="{% static 'graduation-cap.png' %}" alt="Logo" style="width:50px;">
+            </div>
+
+            <div class="section-title">
+              <h1 class="mb-10 display-4 fw-bold">{{ code }}</h1>
+              <h2 class="mb-20">{{ title }}</h2>
+              <p>{{ message }}</p>
+            </div>
+
+            <div class="error-btn mt-30">
+              <a class="edu-btn" href="{% url 'home' %}">
+                Back to homepage
+              </a>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+
+{% endblock %}

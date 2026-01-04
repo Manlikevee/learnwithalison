@@ -26,9 +26,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-e$52__2vr^t&z_$kwf371i-o12(0fi6x8cvaekn%@r(&3a=bnf'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['learnwithalison.com', 'localhost', '127.0.0.1']
 
 
 # Application definition
@@ -40,6 +40,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.humanize',
+    'django_cleanup.apps.CleanupConfig',
     'users',
     'dashboard',
     'home',
@@ -75,7 +77,7 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'learnwithalison.wsgi.application'
 
-
+LOGIN_URL = '/users/login/'
 # Database
 # https://docs.djangoproject.com/en/6.0/ref/settings/#databases
 

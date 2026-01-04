@@ -1,0 +1,250 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load humanize %}
+{% block content %}
+
+<script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+<script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+<main>
+
+<!-- HERO -->
+<div class="hero-arera course-item-height"
+     data-background="{% static 'images/slider/course-slider.jpg' %}">
+  <div class="container">
+    <div class="row">
+      <div class="col-xl-12">
+        <div class="hero-course-1-text">
+          <h2>{{ course.title }}</h2>
+        </div>
+        <div class="course-title-breadcrumb">
+          <nav>
+            <ol class="breadcrumb">
+              <li class="breadcrumb-item">
+                <a href="{% url 'home' %}">Home</a>
+              </li>
+              <li class="breadcrumb-item">
+                <a href="{% url 'course_list' %}">Courses</a>
+              </li>
+              <li class="breadcrumb-item active">
+                {{ course.title }}
+              </li>
+            </ol>
+          </nav>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- COURSE DETAILS -->
+<section class="course-detalis-area pb-90">
+  <div class="container">
+    <div class="row">
+{%include 'message.html'%}
+        <br>
+      <!-- LEFT -->
+      <div class="col-xxl-8 col-xl-8">
+
+        <div class="course-detalis-wrapper mb-30">
+
+          <!-- HEADING -->
+          <div class="course-heading mb-20">
+            <h2>{{ course.title }}</h2>
+          </div>
+
+          <!-- META -->
+          <div class="course-detelis-meta">
+
+            <div class="course-meta-wrapper border-line-meta">
+              <div class="course-meta-text">
+                <span>Created by</span>
+                <h6>
+                  {{ course.author.get_full_name|default:course.author.username }}
+                </h6>
+              </div>
+            </div>
+
+            <div class="course-update border-line-meta">
+              <p>Last Update</p>
+              <span>{{ course.updated_at|date:"d F Y" }}</span>
+            </div>
+
+            <div class="course-category">
+              <p>Category</p>
+              <span>{{ course.category.name|default:"General" }}</span>
+            </div>
+
+          </div>
+
+          <!-- DESCRIPTION -->
+          <div class="course-description pt-45 pb-30">
+            <h4>Description</h4>
+            <p>{{ course.description|linebreaks }}</p>
+          </div>
+
+          <!-- CURRICULUM -->
+          <div class="course-curriculum pt-40 pb-50">
+            <h4>Curriculum</h4>
+
+            <ul>
+              <li>
+                {{ course.lessons.count }} lectures
+              </li>
+            </ul>
+
+            <!-- ACCORDION (UNCHANGED STYLING) -->
+            <div class="course-curriculam-accodion mt-30">
+              <div class="accordion" id="accordionExample">
+
+                {% for section in sections %}
+                <div class="accordion-item">
+
+                  <div class="accordion-header" id="heading{{ section.id }}">
+                    <button class="accordion-button collapsed"
+                            type="button"
+                            data-bs-toggle="collapse"
+                            data-bs-target="#collapse{{ section.id }}"
+                            aria-expanded="false">
+
+                      <span class="accordion-header">
+                        <span class="accordion-tittle">
+                          <span>{{ section.title }}</span>
+                        </span>
+
+                        <span class="accordion-tittle-inner">
+                          <span>
+                            {{ section.lessons.count }} lectures
+                          </span>
+                        </span>
+                      </span>
+
+                    </button>
+                  </div>
+
+                  <div id="collapse{{ section.id }}"
+                       class="accordion-collapse collapse"
+                       data-bs-parent="#accordionExample">
+
+                    <div class="accordion-body">
+
+                      {% for lesson in section.lessons.all %}
+                      <div class="course-curriculum-content
+                                  d-sm-flex justify-content-between
+                                  align-items-center">
+
+                        <div class="course-curriculum-info d-flex align-items-center">
+                      <ion-icon name="videocam-outline"></ion-icon>
+                          <h4 class="mb-0">  {{ lesson.title }}</h4>
+                        </div>
+
+                        <div class="course-curriculum-meta">
+                          <span>{{ lesson.duration|default:"--:--" }}</span>
+
+                          {% if lesson.is_preview %}
+                            <span class="time">
+                            <ion-icon name="lock-closed-outline"></ion-icon>
+                            </span>
+                          {% else %}
+             <span class="time"> <ion-icon name="lock-closed-outline"></ion-icon></span>
+                          {% endif %}
+                        </div>
+
+                      </div>
+                      {% empty %}
+                        <p class="text-muted">No lessons yet.</p>
+                      {% endfor %}
+
+                    </div>
+                  </div>
+
+                </div>
+                {% empty %}
+                  <p class="text-muted">No curriculum available.</p>
+                {% endfor %}
+
+              </div>
+            </div>
+
+              <br>
+              <br>
+                                          <div class="course-instructors">
+                                <h3>instructors</h3>
+                                <div class="instructors-heading">
+                                    <div class="instructors-img w-img">
+                                        <a href="instructor-profile.html"><img src="images/course-instructors.png" alt="image not found"></a>
+                                    </div>
+                                    <div class="instructors-body">
+                                        <h5><a href="instructor-profile.html">{{ course.author.first_name }}  {{ course.author.last_name }}</a></h5>
+                                        <span>instructors</span>
+                                        <div class="intructors-review">
+                                            <i class="fas fa-star"></i>
+                                            <span>5</span>
+                                        </div>
+                                        <div class="instructors-footer">
+                                            <i class="fas fa-desktop"></i>
+                                            <span>3 Coursess</span>
+                                            <i class="far fa-user-friends"></i>
+                                            <span>78,742 Students</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="intructors-content">
+                                    <p>I am a tutor and Educational counselor with a demonstrated history of working in the education industry. Skilled in analytical skills. Strong educational professional with a Distinction in MSc Theoretical Physics.</p>
+                                </div>
+                            </div>
+
+          </div>
+
+        </div>
+      </div>
+
+      <!-- RIGHT SIDEBAR -->
+      <div class="col-xxl-4 col-xl-4 col-lg-8 col-md-8">
+        <div class="course-video-widget">
+
+          <div class="course-widget-wrapper mb-30">
+
+            <div class="course-video-thumb w-img">
+              {% if course.thumbnail %}
+                <img src="{{ course.thumbnail.url }}" alt="{{ course.title }}">
+              {% else %}
+                <img src="{% static 'images/course/default.jpg' %}">
+              {% endif %}
+            </div>
+
+            <div class="course-video-price">
+              {% if course.price_type == 'free' %}
+                <span>Free</span>
+              {% else %}
+                <span>${{ course.price|intcomma }}</span>
+              {% endif %}
+            </div>
+
+            <div class="course-video-body">
+              <ul>
+                <li><span>Level</span><strong>{{ course.level|title }}</strong></li>
+                <li><span>Lectures</span><strong>{{ course.lessons.count }}</strong></li>
+                <li><span>Category</span><strong>{{ course.category.name }}</strong></li>
+                <li><span>Access</span><strong>Lifetime</strong></li>
+              </ul>
+            </div>
+
+            <div class="video-wishlist">
+              {% if course.price_type == 'free' %}
+                <a href="{% url 'add_to_cart' course.id %}" class="video-cart-btn">Enroll Now</a>
+              {% else %}
+                <a href="{% url 'add_to_cart' course.id %}" class="video-cart-btn">Buy Course</a>
+              {% endif %}
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+</main>
+
+{% endblock %}

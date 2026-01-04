@@ -1,0 +1,172 @@
+{% extends 'dashlayout.html' %}
+{% load static %}
+{% block content %}
+
+<div class="container-fluid">
+
+  <!-- PAGE TITLE -->
+  <div class="page-title-head d-flex align-items-center">
+    <div class="flex-grow-1">
+      <h4 class="fs-xl fw-bold m-0">Ticket Details</h4>
+    </div>
+
+    <div class="text-end">
+      <ol class="breadcrumb m-0 py-0">
+        <li class="breadcrumb-item">
+          <a href="{% url 'admin_support' %}">Support</a>
+        </li>
+        <li class="breadcrumb-item active">
+          #{{ ticket.ticket_id }}
+        </li>
+      </ol>
+    </div>
+  </div>
+
+  <div class="row mt-3">
+
+    <!-- TICKET INFO -->
+    <div class="col-xl-4">
+      <div class="card">
+        <div class="card-header">
+          <h5 class="card-title mb-0">Ticket Information</h5>
+        </div>
+
+        <div class="card-body">
+
+          <div class="mb-3">
+            <span class="text-muted">Ticket ID</span>
+            <h6 class="fw-semibold">#{{ ticket.ticket_id }}</h6>
+          </div>
+
+          <!-- STATUS -->
+          <div class="mb-3">
+            <span class="text-muted">Status</span><br>
+            <span class="badge fw-semibold
+              {% if ticket.status == 'open' %}
+                bg-info-subtle text-info
+              {% elif ticket.status == 'in_progress' %}
+                bg-warning-subtle text-warning
+              {% elif ticket.status == 'resolved' %}
+                bg-success-subtle text-success
+              {% else %}
+                bg-secondary-subtle text-secondary
+              {% endif %}
+            ">
+              {{ ticket.status|title }}
+            </span>
+          </div>
+
+          <!-- PRIORITY -->
+          <div class="mb-3">
+            <span class="text-muted">Priority</span><br>
+            <span class="badge fw-semibold
+              {% if ticket.priority == 'high' %}
+                bg-danger-subtle text-danger
+              {% elif ticket.priority == 'medium' %}
+                bg-warning-subtle text-warning
+              {% else %}
+                bg-secondary-subtle text-secondary
+              {% endif %}
+            ">
+              {{ ticket.priority|title }}
+            </span>
+          </div>
+
+          <div class="mb-3">
+            <span class="text-muted">Category</span>
+            <h6 class="fw-semibold">{{ ticket.category|title }}</h6>
+          </div>
+
+          <div class="mb-3">
+            <span class="text-muted">Created</span>
+            <h6 class="fw-semibold">
+              {{ ticket.created_at|date:"d M Y, H:i" }}
+            </h6>
+          </div>
+
+          <hr>
+
+          <!-- USER -->
+          <div class="mb-3">
+            <span class="text-muted">User</span>
+            <h6 class="fw-semibold mb-0">
+              {{ ticket.user.get_full_name|default:ticket.user.username }}
+            </h6>
+            <small class="text-muted">
+              {{ ticket.user.email }}
+            </small>
+          </div>
+
+          {% if request.user.is_staff and ticket.status != 'resolved' %}
+          <a href="{% url 'support_ticket_resolve' ticket.id %}"
+             class="btn btn-success w-100 mt-3"
+             onclick="return confirm('Mark this ticket as resolved?');">
+            Mark as Resolved
+          </a>
+          {% endif %}
+
+        </div>
+      </div>
+    </div>
+
+    <!-- MESSAGE THREAD -->
+    <div class="col-xl-8">
+      <div class="card h-100">
+
+        <div class="card-header">
+          <h5 class="card-title mb-0">Conversation</h5>
+        </div>
+
+        <div class="card-body" style="max-height: 420px;" data-simplebar>
+
+          <!-- ORIGINAL MESSAGE -->
+          <div class="mb-4">
+            <div class="d-flex justify-content-between">
+              <h6 class="fw-semibold mb-1">
+                {{ ticket.user.get_full_name|default:ticket.user.username }}
+              </h6>
+              <small class="text-muted">
+                {{ ticket.created_at|date:"H:i" }}
+              </small>
+            </div>
+            <div class="p-3 bg-light rounded">
+              {{ ticket.message }}
+            </div>
+          </div>
+
+          {# Replies will go here later #}
+
+        </div>
+
+        <!-- REPLY BOX -->
+        {% if ticket.status != 'resolved' %}
+        <div class="card-footer border-top">
+          <form method="POST">
+            {% csrf_token %}
+            <div class="mb-2">
+              <textarea class="form-control"
+                        name="reply"
+                        rows="3"
+                        placeholder="Write a reply..."></textarea>
+            </div>
+
+            <div class="d-flex justify-content-end gap-2">
+              <a href="{% url 'admin_support' %}" class="btn btn-light">
+                Back
+              </a>
+              <button type="submit" class="btn btn-primary">
+                Send Reply
+              </button>
+            </div>
+          </form>
+        </div>
+        {% endif %}
+
+      </div>
+    </div>
+
+  </div>
+
+</div>
+
+{% endblock %}

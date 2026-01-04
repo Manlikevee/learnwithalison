@@ -1,0 +1,272 @@
+<!DOCTYPE html><html lang="en"><head>
+    {% load static %}
+    <meta charset="utf-8">
+  <script>
+    async function checkSuperuser() {
+    try {
+        const response = await fetch('/check_superuser/');
+        const data = await response.json();
+
+        if (data.is_superuser === "no") {
+            // If the user is not a superuser, redirect to the home page
+            window.location.href = '/';
+        }
+    } catch (error) {
+        console.error('Error checking superuser status:', error);
+    }
+}
+
+// Call the function on page load or when needed
+checkSuperuser();
+
+
+
+  </script>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Welcome toInstructor Alison Learning Platform</title>
+    <meta name="description" content="Instructor Alison's Tutorials - Simplified lessons in Mathematics, Physics, and Chemistry for learners at all levels.">
+
+    <meta name="author" content="Victor Odah">
+
+    <!-- App favicon -->
+    <link rel="shortcut icon" href="images/favicon.ico">
+
+    <!-- jVector Map CSS-->
+    <link rel="stylesheet" href="{% static 'csss/jsvectormap.min.css' %}">
+
+    <!-- Theme Config Js -->
+    <script src="{% static 'jays/config.js' %}"></script>
+
+    <!-- Vendor css -->
+    <link href="{% static 'csss/vendors.min.css' %}" rel="stylesheet" type="text/css">
+
+    <!-- App css -->
+    <link href="{% static 'csss/app.min.css' %}" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+    <!-- Begin page -->
+    <div class="wrapper">
+
+
+        <!-- Sidenav Menu Start -->
+        <div class="sidenav-menu">
+
+            <!-- Brand Logo -->
+            <a href="index.html" class="logo">
+                <span class="logo logo-light">
+                    <span class="logo-lg"><img src="{% static 'images/logo.png' %}" alt="logo"></span>
+                    <span class="logo-sm"><img src="{% static 'images/logo-sm.png' %}" alt="small logo"></span>
+                </span>
+
+                <span class="logo logo-dark">
+                    <span class="logo-lg"><img src="{% static 'images/logo-black.png' %}" alt="dark logo"></span>
+                    <span class="logo-sm"><img src="{% static 'images/logo-sm.png' %}" alt="small logo"></span>
+                </span>
+            </a>
+
+            <!-- Sidebar Hover Menu Toggle Button -->
+            <button class="button-on-hover">
+                <i class="ti ti-menu-4 fs-22 align-middle"></i>
+            </button>
+
+            <!-- Full Sidebar Menu Close Button -->
+            <button class="button-close-offcanvas">
+                <i class="ti ti-x align-middle"></i>
+            </button>
+
+            <div class="scrollbar" data-simplebar="">
+
+                <!-- User -->
+<div class="sidenav-user">
+  <div class="d-flex align-items-center">
+    <a href="profile.html" class="link-reset fw-bold sidenav-user-name">
+      Geneva K.
+    </a>
+  </div>
+</div>
+
+                <!--- Sidenav Menu -->
+{% include 'adminsidebar.html' %}
+
+
+            </div>
+        </div>
+        <!-- Sidenav Menu End -->
+
+        <!-- Topbar Start -->
+<header class="app-topbar">
+  <div class="container-fluid topbar-menu">
+    <div class="d-flex align-items-center gap-2">
+
+      <!-- Logo -->
+      <div class="logo-topbar">
+        <a href="index.html" class="logo-light">
+          <span class="logo-lg">
+            <img src="{% static 'images/logo.png' %}" alt="logo">
+          </span>
+          <span class="logo-sm">
+            <img src="{% static 'images/logo-sm.png' %}" alt="logo">
+          </span>
+        </a>
+
+        <a href="index.html" class="logo-dark">
+          <span class="logo-lg">
+            <img src="{% static 'images/logo-black.png' %}" alt="logo">
+          </span>
+          <span class="logo-sm">
+            <img src="{% static 'images/logo-sm.png' %}" alt="logo">
+          </span>
+        </a>
+      </div>
+
+      <!-- Sidebar Toggle -->
+      <button class="sidenav-toggle-button btn btn-default btn-icon">
+        <i class="ti ti-menu-4 fs-22"></i>
+      </button>
+
+      <!-- Search (optional – remove if not needed) -->
+      <div class="app-search d-none d-md-flex ms-2">
+        <input type="search"
+               class="form-control topbar-search rounded-pill"
+               placeholder="Search...">
+        <i data-lucide="search" class="app-search-icon text-muted"></i>
+      </div>
+
+    </div>
+
+    <div class="d-flex align-items-center gap-2">
+
+      <!-- THEME MODE (RESTORED ORIGINAL FUNCTION) -->
+      <div class="topbar-item">
+        <div class="dropdown">
+          <button class="topbar-link"
+                  data-bs-toggle="dropdown"
+                  data-bs-offset="0,24"
+                  type="button"
+                  aria-haspopup="false"
+                  aria-expanded="false">
+            <i data-lucide="sun" class="fs-xxl"></i>
+          </button>
+
+          <!-- IMPORTANT: keep class + radio names -->
+          <ul class="dropdown-menu dropdown-menu-end thememode-dropdown">
+
+            <li>
+              <label class="dropdown-item">
+                <i data-lucide="sun" class="align-middle me-1 fs-16"></i>
+                <span class="align-middle">Light</span>
+                <input class="form-check-input ms-auto"
+                       type="radio"
+                       name="data-bs-theme"
+                       value="light">
+              </label>
+            </li>
+
+            <li>
+              <label class="dropdown-item">
+                <i data-lucide="moon" class="align-middle me-1 fs-16"></i>
+                <span class="align-middle">Dark</span>
+                <input class="form-check-input ms-auto"
+                       type="radio"
+                       name="data-bs-theme"
+                       value="dark">
+              </label>
+            </li>
+
+          </ul>
+        </div>
+      </div>
+
+      <!-- USER DROPDOWN -->
+      <div class="topbar-item nav-user">
+        <div class="dropdown">
+          <a class="topbar-link dropdown-toggle drop-arrow-none px-2"
+             data-bs-toggle="dropdown"
+             data-bs-offset="0,19"
+             href="#!"
+             aria-haspopup="false"
+             aria-expanded="false">
+
+            <div class="d-lg-flex align-items-center gap-1 d-none">
+              <h5 class="my-0">Geneva</h5>
+              <i class="ti ti-chevron-down align-middle"></i>
+            </div>
+          </a>
+
+          <div class="dropdown-menu dropdown-menu-end">
+
+            <a href="profile.html" class="dropdown-item">
+              <i class="ti ti-user-circle me-1 fs-17 align-middle"></i>
+              <span class="align-middle">Profile</span>
+            </a>
+
+            <div class="dropdown-divider"></div>
+
+            <a href="/logout" class="dropdown-item fw-semibold text-danger">
+              <i class="ti ti-logout-2 me-1 fs-17 align-middle"></i>
+              <span class="align-middle">Log Out</span>
+            </a>
+
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</header>
+
+
+        <!-- Topbar End -->
+
+
+
+        <!-- ============================================================== -->
+        <!-- Start Main Content -->
+        <!-- ============================================================== -->
+    <script src="{% static 'jays/vendors.min.js' %}"></script>
+
+    <!-- App js -->
+    <script src="{% static 'jays/app.js' %}"></script>
+
+    <!-- Plugins js -->
+    <script src="{% static 'jays/apexcharts.min.js' %}"></script>
+
+    <script src="{% static 'jays/chart.umd.js' %}"></script>
+        <div class="content-page">
+
+          {% block content %}
+
+
+    {% endblock %}
+
+            <!-- Footer Start -->
+            <footer class="footer">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-12 text-center">
+                            © <script>document.write(new Date().getFullYear())</script> UBold By <span class="fw-semibold"></span>
+                        </div>
+                    </div>
+                </div>
+            </footer>
+            <!-- end Footer -->
+
+        </div>
+        <!-- ============================================================== -->
+        <!-- End of Main Content -->
+        <!-- ============================================================== -->
+
+    </div>
+    <!-- END wrapper -->
+
+    <!-- Theme Settings -->
+
+
+    <!-- Vendor js -->
+
+<!--    <script src="{% static 'jays/dashboard.js' %}"></script>-->
+
+
+
+</body></html>

@@ -54,9 +54,10 @@
                     <li><a href="{% url 'about' %}">About Me</a></li>
 
                     <li class="menu-item-has-children">
-                      <a href="{% url 'course_list' %}">Courses</a>
+                      <a href="#">Courses</a>
                       <ul class="sub-menu">
-                        <li><a href="{% url 'course_list' %}">All Courses</a></li>
+                        <li><a href="{% url 'youtube_course_list' %}">All Courses</a></li>
+                          <li><a href="{% url 'course_list' %}">Youtube Courses</a></li>
                       </ul>
                     </li>
 
@@ -76,11 +77,11 @@
 
                 <!-- Cart -->
                 <div class="cart-wrapper mr-25">
-                  <a href="#" class="cart-toggle-btn">
+                  <a href="{% url 'cart' %}" class="cart-toggle-btna">
                     <div class="header__cart-icon p-relative">
                       <i class="fas fa-shopping-cart"></i>
                       <span class="item-number">
-                        {{ cart_count|default:0 }}
+
                       </span>
                     </div>
                   </a>

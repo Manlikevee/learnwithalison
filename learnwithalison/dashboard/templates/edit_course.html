@@ -1,0 +1,106 @@
+{% extends 'dashlayout.html' %}
+{% load static %}
+{% block content %}
+
+<div class="container-fluid">
+
+  <div class="page-title-head d-flex align-items-center mb-3">
+    <div class="flex-grow-1">
+      <h4 class="fs-xl fw-bold m-0">Edit Course</h4>
+    </div>
+  </div>
+
+  <form method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+
+    <div class="card p-4 col-xl-8">
+
+      <!-- TITLE -->
+      <label class="form-label">Course Title</label>
+      <input type="text" name="title"
+             class="form-control mb-3"
+             value="{{ course.title }}" required>
+
+      <!-- CATEGORY -->
+      <label class="form-label">Category</label>
+      <select name="category" class="form-select mb-3">
+        {% for category in categories %}
+          <option value="{{ category.id }}"
+            {% if category.id == course.category.id %}selected{% endif %}>
+            {{ category.name }}
+          </option>
+        {% endfor %}
+      </select>
+
+      <!-- DESCRIPTION -->
+      <label class="form-label">Description</label>
+      <textarea name="description"
+                class="form-control mb-3"
+                rows="4">{{ course.description }}</textarea>
+
+      <!-- EXISTING VIDEO -->
+      <label class="form-label">Current Video</label>
+      {% if course.video %}
+        <video class="w-100 rounded mb-2" controls >
+          <source src="{{ course.video.url }}">
+        </video>
+        <small class="text-muted d-block mb-3">
+          Upload a new video to replace this one
+        </small>
+      {% else %}
+        <p class="text-muted mb-2">No video uploaded</p>
+      {% endif %}
+
+      <!-- VIDEO INPUT -->
+      <input type="file" name="video" class="form-control mb-4" accept="video/*">
+
+      <!-- EXISTING THUMBNAIL -->
+      <label class="form-label">Current Thumbnail</label>
+      {% if course.thumbnail %}
+        <img src="{{ course.thumbnail.url }}"
+             class="img-fluid rounded mb-2"
+             style="max-height: 200px; object-fit: cover;">
+        <small class="text-muted d-block mb-3">
+          Upload a new image to replace this thumbnail
+        </small>
+      {% else %}
+        <p class="text-muted mb-2">No thumbnail uploaded</p>
+      {% endif %}
+
+      <!-- THUMBNAIL INPUT -->
+      <input type="file" name="thumbnail"
+             class="form-control mb-4"
+             accept="image/*">
+
+      <!-- DURATION -->
+      <label class="form-label">Duration</label>
+      <input type="text" name="duration"
+             class="form-control mb-3"
+             value="{{ course.duration }}" readonly>
+
+      <!-- STATUS -->
+      <label class="form-label">Status</label>
+      <select name="status" class="form-select mb-4">
+        <option value="draft" {% if course.status == 'draft' %}selected{% endif %}>
+          Draft
+        </option>
+        <option value="published" {% if course.status == 'published' %}selected{% endif %}>
+          Published
+        </option>
+      </select>
+
+      <!-- ACTIONS -->
+      <div class="d-flex gap-2">
+        <button class="btn btn-primary px-4">Save Changes</button>
+        <a href="{% url 'admin_courses' %}" class="btn btn-light px-4">
+          Cancel
+        </a>
+      </div>
+
+    </div>
+
+  </form>
+
+</div>
+
+{% endblock %}
