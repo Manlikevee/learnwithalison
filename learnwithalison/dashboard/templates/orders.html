@@ -1,0 +1,143 @@
+{% extends 'dashlayout.html' %}
+{% load static %}
+{% load humanize %}
+{% block content %}
+
+<div class="container-fluid">
+
+  <!-- PAGE TITLE -->
+  <div class="page-title-head d-flex align-items-center">
+    <div class="flex-grow-1">
+      <h4 class="fs-xl fw-bold m-0">My Payments</h4>
+    </div>
+
+    <div class="text-end">
+      <ol class="breadcrumb m-0 py-0">
+        <li class="breadcrumb-item">
+          <a href="{% url 'admin_dashboard' %}">Dashboard</a>
+        </li>
+        <li class="breadcrumb-item active">Payments</li>
+      </ol>
+    </div>
+  </div>
+
+  <!-- PAYMENT HISTORY -->
+  <div class="row mt-3">
+    <div class="col-12">
+
+      <div data-table data-table-rows-per-page="10" class="card">
+
+        <!-- HEADER -->
+        <div class="card-header border-light justify-content-between">
+          <div class="d-flex gap-2">
+            <div class="app-search">
+              <input data-table-search
+                     type="search"
+                     class="form-control"
+                     placeholder="Search payments...">
+              <i data-lucide="search" class="app-search-icon text-muted"></i>
+            </div>
+          </div>
+
+          <div>
+            <select data-table-set-rows-per-page
+                    class="form-select form-control my-1 my-md-0">
+              <option value="5">5</option>
+              <option value="10" selected>10</option>
+              <option value="20">20</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- TABLE -->
+        <div class="table-responsive">
+          <table class="table table-custom table-hover table-centered w-100 mb-0">
+            <thead class="bg-light bg-opacity-25 thead-sm">
+              <tr class="text-uppercase fs-xxs">
+                <th data-table-sort>Reference</th>
+                <th data-table-sort>Course</th>
+                <th>Amount</th>
+                <th>Status</th>
+                <th data-table-sort>Date</th>
+                <th class="text-center">Receipt</th>
+              </tr>
+            </thead>
+
+            <tbody>
+
+              {% for tx in transactions %}
+              <tr>
+                <td>#{{ tx.reference }}</td>
+
+                <td>
+                  <strong>{{ tx.course.title }}</strong>
+                </td>
+
+                <td>
+                  ${{ tx.amount|floatformat:2|intcomma }}
+                </td>
+
+                <td>
+                  {% if tx.status == "completed" %}
+                    <span class="badge bg-success-subtle text-success fs-xxs fw-semibold">
+                      Completed
+                    </span>
+                  {% elif tx.status == "pending" %}
+                    <span class="badge bg-warning-subtle text-warning fs-xxs fw-semibold">
+                      Pending
+                    </span>
+                  {% elif tx.status == "failed" %}
+                    <span class="badge bg-danger-subtle text-danger fs-xxs fw-semibold">
+                      Failed
+                    </span>
+                  {% elif tx.status == "refunded" %}
+                    <span class="badge bg-secondary-subtle text-secondary fs-xxs fw-semibold">
+                      Refunded
+                    </span>
+                  {% endif %}
+                </td>
+
+                <td>
+                  {{ tx.created_at|date:"M d, Y H:i" }}
+                </td>
+
+                <td class="text-center">
+                  {% if tx.status == "completed" %}
+                    <a href="#"
+                       class="btn btn-default btn-icon btn-sm"
+                       title="View receipt">
+                      <i class="ti ti-file-invoice fs-lg"></i>
+                    </a>
+                  {% else %}
+                    <span class="text-muted fs-xs">—</span>
+                  {% endif %}
+                </td>
+              </tr>
+              {% empty %}
+              <tr>
+                <td colspan="6" class="text-center text-muted py-4">
+                  No payments found.
+                </td>
+              </tr>
+              {% endfor %}
+
+            </tbody>
+          </table>
+        </div>
+
+        <!-- FOOTER -->
+        <div class="card-footer border-0">
+          <div class="d-flex justify-content-between align-items-center">
+            <div data-table-pagination-info="payments"></div>
+            <div data-table-pagination></div>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+
+</div>
+
+{% endblock %}

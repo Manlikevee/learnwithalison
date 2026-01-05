@@ -1,0 +1,164 @@
+{% extends 'dashlayout.html' %}
+{% load static %}
+{% block content %}
+
+<div class="container-fluid">
+
+  <!-- PAGE TITLE -->
+  <div class="page-title-head d-flex align-items-center">
+    <div class="flex-grow-1">
+      <h4 class="fs-xl fw-bold m-0">My Profile</h4>
+    </div>
+
+    <div class="text-end">
+      <ol class="breadcrumb m-0 py-0">
+        <li class="breadcrumb-item"><a href="#">Dashboard</a></li>
+        <li class="breadcrumb-item active">Profile</li>
+      </ol>
+    </div>
+  </div>
+
+  <!-- PROFILE HEADER -->
+  <div class="row mt-3">
+    <div class="col-xl-4">
+      <div class="card">
+        <div class="card-body text-center">
+
+          <div class="avatar avatar-xl mb-3">
+            <span class="avatar-title bg-primary-subtle text-primary rounded-circle fs-32">
+              {{ request.user.first_name|first|upper }}{{ request.user.last_name|first|upper }}
+            </span>
+          </div>
+
+          <h5 class="mb-1 fw-semibold">
+            {{ request.user.get_full_name|default:request.user.username }}
+          </h5>
+
+          <p class="text-muted mb-2">
+            {% if request.user.is_staff %}Administrator{% else %}User{% endif %}
+          </p>
+
+          <span class="badge bg-primary-subtle text-primary">
+            {% if request.user.is_superuser %}Super Admin{% elif request.user.is_staff %}Admin{% else %}User{% endif %}
+          </span>
+
+        </div>
+      </div>
+    </div>
+
+    <!-- PROFILE DETAILS -->
+    <div class="col-xl-8">
+      <div class="card">
+        <div class="card-header">
+          <h5 class="card-title mb-0">Personal Information</h5>
+        </div>
+
+        <div class="card-body">
+          <form method="POST">
+            {% csrf_token %}
+
+            <input type="hidden" name="form_type" value="profile">
+
+            <div class="row g-3">
+              <div class="col-md-6">
+                <label class="form-label">Username</label>
+                <input type="text" class="form-control"
+                       value="{{ request.user.username }}" readonly>
+              </div>
+
+              <div class="col-md-6">
+                <label class="form-label">Email Address</label>
+                <input type="email" name="email"
+                       class="form-control"
+                       value="{{ request.user.email }}">
+              </div>
+
+              <div class="col-md-6">
+                <label class="form-label">First Name</label>
+                <input type="text" name="first_name"
+                       class="form-control"
+                       value="{{ request.user.first_name }}">
+              </div>
+
+              <div class="col-md-6">
+                <label class="form-label">Last Name</label>
+                <input type="text" name="last_name"
+                       class="form-control"
+                       value="{{ request.user.last_name }}">
+              </div>
+
+              <div class="col-md-6">
+                <label class="form-label">Role</label>
+                <input type="text" class="form-control"
+                       value="{% if request.user.is_staff %}Administrator{% else %}User{% endif %}"
+                       readonly>
+              </div>
+
+              <div class="col-md-6">
+                <label class="form-label">Account Status</label>
+                <input type="text" class="form-control"
+                       value="Active" readonly>
+              </div>
+            </div>
+
+            <div class="mt-4 text-end">
+              <button type="submit" class="btn btn-primary">
+                Save Changes
+              </button>
+            </div>
+
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECURITY SETTINGS -->
+  <div class="row mt-3">
+    <div class="col-xl-12">
+      <div class="card">
+        <div class="card-header">
+          <h5 class="card-title mb-0">Security</h5>
+        </div>
+
+        <div class="card-body">
+          <form method="POST">
+            {% csrf_token %}
+
+            <input type="hidden" name="form_type" value="password">
+
+            <div class="row g-3">
+              <div class="col-md-4">
+                <label class="form-label">Current Password</label>
+                <input type="password" name="current_password"
+                       class="form-control" required>
+              </div>
+
+              <div class="col-md-4">
+                <label class="form-label">New Password</label>
+                <input type="password" name="new_password"
+                       class="form-control" required>
+              </div>
+
+              <div class="col-md-4">
+                <label class="form-label">Confirm Password</label>
+                <input type="password" name="confirm_password"
+                       class="form-control" required>
+              </div>
+            </div>
+
+            <div class="mt-4 text-end">
+              <button type="submit" class="btn btn-danger">
+                Update Password
+              </button>
+            </div>
+
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+{% endblock %}

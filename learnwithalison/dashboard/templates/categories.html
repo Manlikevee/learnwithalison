@@ -1,0 +1,151 @@
+{% extends 'dashlayout.html' %}
+{% load static %}
+{% block content %}
+
+<div class="container-fluid">
+
+  <!-- PAGE TITLE -->
+  <div class="page-title-head d-flex align-items-center">
+    <div class="flex-grow-1">
+      <h4 class="fs-xl fw-bold m-0">Course Categories</h4>
+    </div>
+
+    <div class="text-end">
+      <ol class="breadcrumb m-0 py-0">
+        <li class="breadcrumb-item">
+          <a href="{% url 'admin_dashboard' %}">Dashboard</a>
+        </li>
+        <li class="breadcrumb-item active">Categories</li>
+      </ol>
+    </div>
+  </div>
+
+  <!-- CATEGORY LIST -->
+  <div class="row mt-3">
+    <div class="col-xl-12">
+      <div class="card">
+        <div class="card-header">
+          <h5 class="card-title mb-0">Existing Categories</h5>
+        </div>
+
+        <div class="card-body">
+          <div class="table-responsive">
+            <table class="table table-custom table-hover mb-0">
+              <thead class="bg-light bg-opacity-25 thead-sm">
+                <tr class="text-uppercase fs-xxs">
+                  <th>Name</th>
+                  <th>Description</th>
+                  <th>Courses</th>
+                  <th>Status</th>
+                  <th class="text-center">Actions</th>
+                </tr>
+              </thead>
+
+              <tbody>
+                {% for category in categories %}
+                <tr>
+                  <td class="fw-semibold">{{ category.name }}</td>
+
+                  <td class="text-muted">
+                    {{ category.description|default:"—" }}
+                  </td>
+
+                  <!-- Placeholder for future course count -->
+                  <td>—</td>
+
+                  <td>
+                    {% if category.status == 'active' %}
+                      <span class="badge bg-success-subtle text-success">
+                        Active
+                      </span>
+                    {% else %}
+                      <span class="badge bg-warning-subtle text-warning">
+                        Inactive
+                      </span>
+                    {% endif %}
+                  </td>
+
+                  <td class="text-center">
+                    <a href="{% url 'edit_category' category.id %}"
+                       class="btn btn-default btn-icon btn-sm">
+                      <i class="ti ti-edit"></i>
+                    </a>
+
+                    <a href="{% url 'delete_category' category.id %}"
+                       class="btn btn-default btn-icon btn-sm text-danger"
+                       onclick="return confirm('Are you sure you want to delete this category?');">
+                      <i class="ti ti-trash"></i>
+                    </a>
+                  </td>
+                </tr>
+                {% empty %}
+                <tr>
+                  <td colspan="5" class="text-center text-muted py-4">
+                    No categories have been added yet
+                  </td>
+                </tr>
+                {% endfor %}
+              </tbody>
+
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ADD CATEGORY -->
+  <div class="row mt-3">
+    <div class="col-xl-6">
+
+      <div class="card">
+        <div class="card-header">
+          <h5 class="card-title mb-0">Add New Category</h5>
+        </div>
+
+        <div class="card-body">
+          <form method="POST">
+            {% csrf_token %}
+
+            <div class="mb-3">
+              <label class="form-label">Category Name</label>
+              <input type="text"
+                     name="name"
+                     class="form-control"
+                     placeholder="e.g. Development"
+                     required>
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label">Description</label>
+              <textarea name="description"
+                        class="form-control"
+                        rows="3"
+                        placeholder="Short description"></textarea>
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label">Status</label>
+              <select name="status" class="form-select">
+                <option value="active">Active</option>
+                <option value="inactive">Inactive</option>
+              </select>
+            </div>
+
+            <div class="text-end">
+              <button type="submit"
+                      class="btn btn-primary btn-lg px-4">
+                Add Category
+              </button>
+            </div>
+
+          </form>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+</div>
+
+{% endblock %}
