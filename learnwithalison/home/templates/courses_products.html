@@ -1,0 +1,200 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+
+<main>
+
+  <!-- ================= HERO ================= -->
+  <div class="hero-area-3 hero-height-3"
+       data-background="https://codeskdhaka.com/html/eduman-prv/eduman/assets/img/slider/hero-3.jpg">
+    <div class="container">
+      <div class="row justify-content-center">
+        <div class="col-xl-8 text-center">
+          <div class="hero-university-text">
+            <span>Instructor Alison’s Tutorials</span>
+            <h2>{{ content.page_title }}</h2>
+            <p class="text-light mt-3">
+              Flexible learning solutions for local and international students
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= DIGITAL PRODUCTS ================= -->
+  <section class="pt-110 pb-90">
+    <div class="container">
+      <div class="row align-items-center">
+
+        <div class="col-xl-6 mb-30">
+          <div class="section-title mb-30">
+            <h2>{{ content.digital_title }}</h2>
+          </div>
+
+          <p class="mb-25">{{ content.digital_intro }}</p>
+
+          <h5 class="mb-15">Available Products</h5>
+          <ul class="list-unstyled fs-16">
+            {% for item in content.digital_products_list.splitlines %}
+              <li class="mb-2">
+                <i class="far fa-check-circle text-primary me-2"></i>
+                {{ item }}
+              </li>
+            {% endfor %}
+          </ul>
+
+          <h5 class="mt-30 mb-15">Who These Products Are For</h5>
+          <ul class="list-unstyled fs-16">
+            {% for item in content.digital_audience_list.splitlines %}
+              <li class="mb-2">
+                <i class="far fa-user text-success me-2"></i>
+                {{ item }}
+              </li>
+            {% endfor %}
+          </ul>
+
+          <div class="mt-35">
+            <a href="{% url 'course_list' %}" class="edu-five-btn me-3">
+              {{ content.digital_cta_primary }}
+            </a>
+            <a href="#" class="edu-border-btn">
+              {{ content.digital_cta_secondary }}
+            </a>
+          </div>
+        </div>
+
+        <div class="col-xl-6">
+          <div class="bg-light p-4 rounded shadow-sm">
+            <h4 class="mb-20">Access & Delivery</h4>
+            <ul class="list-unstyled">
+              {% for item in content.digital_access_list.splitlines %}
+                <li class="mb-2">
+                  <i class="fas fa-lock text-warning me-2"></i>
+                  {{ item }}
+                </li>
+              {% endfor %}
+            </ul>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= INTERNATIONAL STUDENTS ================= -->
+  <section class="bg-soft-primary pt-110 pb-100">
+    <div class="container">
+
+      <div class="row justify-content-center">
+        <div class="col-xl-8 text-center">
+          <div class="section-title mb-40">
+            <h2>{{ content.intl_title }}</h2>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+
+        <!-- UK -->
+        <div class="col-md-3 mb-30">
+          <div class="feature-box bg-white p-4 rounded shadow-sm h-100">
+            <h5 class="mb-15">United Kingdom</h5>
+            <ul class="list-unstyled">
+              {% for item in content.uk_list.splitlines %}
+                <li class="mb-2">
+                  <i class="fas fa-flag me-2 text-primary"></i>{{ item }}
+                </li>
+              {% endfor %}
+            </ul>
+          </div>
+        </div>
+
+        <!-- USA -->
+        <div class="col-md-3 mb-30">
+          <div class="feature-box bg-white p-4 rounded shadow-sm h-100">
+            <h5 class="mb-15">United States</h5>
+            <ul class="list-unstyled">
+              {% for item in content.us_list.splitlines %}
+                <li class="mb-2">
+                  <i class="fas fa-flag-usa me-2 text-danger"></i>{{ item }}
+                </li>
+              {% endfor %}
+            </ul>
+          </div>
+        </div>
+
+        <!-- Canada -->
+        <div class="col-md-3 mb-30">
+          <div class="feature-box bg-white p-4 rounded shadow-sm h-100">
+            <h5 class="mb-15">Canada</h5>
+            <ul class="list-unstyled">
+              {% for item in content.canada_list.splitlines %}
+                <li class="mb-2">
+                  <i class="fas fa-map-marker-alt me-2 text-success"></i>{{ item }}
+                </li>
+              {% endfor %}
+            </ul>
+          </div>
+        </div>
+
+        <!-- Global -->
+        <div class="col-md-3 mb-30">
+          <div class="feature-box bg-white p-4 rounded shadow-sm h-100">
+            <h5 class="mb-15">Global Exams</h5>
+            <ul class="list-unstyled">
+              {% for item in content.global_exams_list.splitlines %}
+                <li class="mb-2">
+                  <i class="fas fa-globe me-2 text-warning"></i>{{ item }}
+                </li>
+              {% endfor %}
+            </ul>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ================= WHY INTERNATIONAL ================= -->
+  <section class="pt-110 pb-90">
+    <div class="container">
+
+      <div class="row justify-content-center">
+        <div class="col-xl-8 text-center">
+          <div class="section-title mb-40">
+            <h2>Why International Families Choose Us</h2>
+          </div>
+        </div>
+      </div>
+
+      <div class="row justify-content-center">
+        {% for item in content.intl_why_list.splitlines %}
+        <div class="col-md-6 col-lg-3 mb-30">
+          <div class="service-box p-4 text-center bg-light rounded shadow-sm h-100">
+            <i class="fas fa-star fa-2x text-warning mb-3"></i>
+            <p class="fw-semibold mb-0">{{ item }}</p>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ================= CTA ================= -->
+  <section class="bg-dark text-white pt-80 pb-80">
+    <div class="container text-center">
+      <h2 class="mb-20">{{ content.intl_cta }}</h2>
+      <a href="https://wa.me/+2347039618664"
+         class="edu-five-btn"
+         target="_blank">
+        Book an International Session
+      </a>
+    </div>
+  </section>
+
+</main>
+
+{% endblock %}

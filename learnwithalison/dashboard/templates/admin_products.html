@@ -1,0 +1,144 @@
+{% extends 'dashlayout.html' %}
+{% load static %}
+{% block content %}
+
+<div class="container-fluid">
+
+  <!-- PAGE TITLE -->
+  <div class="page-title-head d-flex align-items-center mb-3">
+    <div class="flex-grow-1">
+      <h4 class="fs-xl fw-bold m-0">Edit Courses & International Products</h4>
+    </div>
+  </div>
+
+  <form method="POST">
+    {% csrf_token %}
+
+    <!-- ================= PAGE META ================= -->
+    <div class="card mb-4">
+      <div class="card-header">
+        <h5 class="card-title mb-0">Page Meta</h5>
+      </div>
+      <div class="card-body">
+        <label class="form-label">{{ form.page_title.label }}</label>
+        {{ form.page_title }}
+      </div>
+    </div>
+
+    <!-- ================= DIGITAL PRODUCTS ================= -->
+    <div class="card mb-4">
+      <div class="card-header">
+        <h5 class="card-title mb-0">Digital Learning Products</h5>
+      </div>
+      <div class="card-body row g-3">
+
+        <div class="col-md-6">
+          <label class="form-label">{{ form.digital_title.label }}</label>
+          {{ form.digital_title }}
+        </div>
+
+        <div class="col-12">
+          <label class="form-label">{{ form.digital_intro.label }}</label>
+          {{ form.digital_intro }}
+        </div>
+
+        <div class="col-md-4">
+          <label class="form-label">{{ form.digital_products_list.label }}</label>
+          {{ form.digital_products_list }}
+          <small class="text-muted">One product per line</small>
+        </div>
+
+        <div class="col-md-4">
+          <label class="form-label">{{ form.digital_audience_list.label }}</label>
+          {{ form.digital_audience_list }}
+          <small class="text-muted">One audience type per line</small>
+        </div>
+
+        <div class="col-md-4">
+          <label class="form-label">{{ form.digital_access_list.label }}</label>
+          {{ form.digital_access_list }}
+        </div>
+
+        <div class="col-md-6">
+          <label class="form-label">{{ form.digital_cta_primary.label }}</label>
+          {{ form.digital_cta_primary }}
+        </div>
+
+        <div class="col-md-6">
+          <label class="form-label">{{ form.digital_cta_secondary.label }}</label>
+          {{ form.digital_cta_secondary }}
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ================= INTERNATIONAL STUDENTS ================= -->
+    <div class="card mb-4">
+      <div class="card-header">
+        <h5 class="card-title mb-0">International Students</h5>
+      </div>
+      <div class="card-body">
+
+        <label class="form-label">{{ form.intl_title.label }}</label>
+        {{ form.intl_title }}
+
+        <div class="row g-3 mt-1">
+
+          <div class="col-md-6">
+            <label class="form-label">United Kingdom</label>
+            {{ form.uk_list }}
+          </div>
+
+          <div class="col-md-6">
+            <label class="form-label">United States</label>
+            {{ form.us_list }}
+          </div>
+
+          <div class="col-md-6">
+            <label class="form-label">Canada</label>
+            {{ form.canada_list }}
+          </div>
+
+          <div class="col-md-6">
+            <label class="form-label">Global & Professional Exams</label>
+            {{ form.global_exams_list }}
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <!-- ================= WHY INTERNATIONAL FAMILIES ================= -->
+    <div class="card mb-4">
+      <div class="card-header">
+        <h5 class="card-title mb-0">Why International Families Choose Us</h5>
+      </div>
+      <div class="card-body">
+        <label class="form-label">{{ form.intl_why_list.label }}</label>
+        {{ form.intl_why_list }}
+      </div>
+    </div>
+
+    <!-- ================= CTA ================= -->
+    <div class="card mb-4">
+      <div class="card-header">
+        <h5 class="card-title mb-0">Call To Action</h5>
+      </div>
+      <div class="card-body">
+        <label class="form-label">{{ form.intl_cta.label }}</label>
+        {{ form.intl_cta }}
+      </div>
+    </div>
+
+    <!-- SAVE BUTTON -->
+    <div class="text-end mb-4">
+      <button type="submit" class="btn btn-primary px-4">
+        Save Products Page
+      </button>
+    </div>
+
+  </form>
+
+</div>
+
+{% endblock %}

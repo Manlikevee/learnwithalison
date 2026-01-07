@@ -1,0 +1,212 @@
+{% extends 'dashlayout.html' %}
+{% load static %}
+{% block content %}
+
+<div class="container-fluid">
+
+  <!-- PAGE TITLE -->
+  <div class="page-title-head d-flex align-items-center mb-3">
+    <div class="flex-grow-1">
+      <h4 class="fs-xl fw-bold m-0">Edit About Page Content</h4>
+    </div>
+  </div>
+
+  <form method="POST">
+    {% csrf_token %}
+
+    <!-- ================= PAGE INTRO ================= -->
+    <div class="card mb-4">
+      <div class="card-header">
+        <h5 class="card-title mb-0">Page Introduction</h5>
+      </div>
+      <div class="card-body row g-3">
+        <div class="col-md-6">
+          <label class="form-label">{{ form.page_title.label }}</label>
+          {{ form.page_title }}
+        </div>
+        <div class="col-md-6">
+          <label class="form-label">{{ form.role_title.label }}</label>
+          {{ form.role_title }}
+        </div>
+        <div class="col-12">
+          <label class="form-label">{{ form.page_intro.label }}</label>
+          {{ form.page_intro }}
+        </div>
+      </div>
+    </div>
+
+    <!-- ================= ACADEMIC BACKGROUND ================= -->
+    <div class="card mb-4">
+      <div class="card-header">
+        <h5 class="card-title mb-0">Academic Background</h5>
+      </div>
+      <div class="card-body row g-3">
+        <div class="col-md-6">
+          <label class="form-label">{{ form.academic_title.label }}</label>
+          {{ form.academic_title }}
+        </div>
+        <div class="col-12">
+          <label class="form-label">{{ form.academic_list.label }}</label>
+          {{ form.academic_list }}
+          <small class="text-muted">One qualification per line</small>
+        </div>
+        <div class="col-12">
+          <label class="form-label">{{ form.academic_summary.label }}</label>
+          {{ form.academic_summary }}
+        </div>
+      </div>
+    </div>
+
+    <!-- ================= EXPERIENCE ================= -->
+    <div class="card mb-4">
+      <div class="card-header">
+        <h5 class="card-title mb-0">Teaching Experience</h5>
+      </div>
+      <div class="card-body">
+        <label class="form-label">{{ form.experience_title.label }}</label>
+        {{ form.experience_title }}
+
+        <label class="form-label mt-3">{{ form.experience_body.label }}</label>
+        {{ form.experience_body }}
+      </div>
+    </div>
+
+    <!-- ================= PHILOSOPHY ================= -->
+    <div class="card mb-4">
+      <div class="card-header">
+        <h5 class="card-title mb-0">Teaching Philosophy</h5>
+      </div>
+      <div class="card-body">
+        <label class="form-label">{{ form.philosophy_title.label }}</label>
+        {{ form.philosophy_title }}
+
+        <label class="form-label mt-3">{{ form.philosophy_list.label }}</label>
+        {{ form.philosophy_list }}
+        <small class="text-muted">One principle per line</small>
+      </div>
+    </div>
+
+    <!-- ================= BRAND VALUES ================= -->
+    <div class="card mb-4">
+      <div class="card-header">
+        <h5 class="card-title mb-0">Brand Values</h5>
+      </div>
+      <div class="card-body">
+        <label class="form-label">{{ form.values_title.label }}</label>
+        {{ form.values_title }}
+
+        <label class="form-label mt-3">{{ form.values_list.label }}</label>
+        {{ form.values_list }}
+      </div>
+    </div>
+
+    <!-- ================= TUTORING SERVICES ================= -->
+    <div class="card mb-4">
+      <div class="card-header">
+        <h5 class="card-title mb-0">Tutoring Services</h5>
+      </div>
+      <div class="card-body">
+        <label class="form-label">{{ form.tutoring_services_title.label }}</label>
+        {{ form.tutoring_services_title }}
+
+        <label class="form-label mt-3">{{ form.tutoring_services_list.label }}</label>
+        {{ form.tutoring_services_list }}
+      </div>
+    </div>
+
+    <!-- ================= SUBJECT SUPPORT ================= -->
+    <div class="card mb-4">
+      <div class="card-header">
+        <h5 class="card-title mb-0">Subject-Specific Support</h5>
+      </div>
+      <div class="card-body row g-3">
+        <div class="col-md-6">
+          <label class="form-label">Mathematics</label>
+          {{ form.math_support }}
+        </div>
+        <div class="col-md-6">
+          <label class="form-label">Physics</label>
+          {{ form.physics_support }}
+        </div>
+        <div class="col-md-6">
+          <label class="form-label">Chemistry</label>
+          {{ form.chemistry_support }}
+        </div>
+        <div class="col-md-6">
+          <label class="form-label">Programming</label>
+          {{ form.programming_support }}
+        </div>
+      </div>
+    </div>
+
+    <!-- ================= PROCESS ================= -->
+    <div class="card mb-4">
+      <div class="card-header">
+        <h5 class="card-title mb-0">How Tutoring Works</h5>
+      </div>
+      <div class="card-body">
+        <label class="form-label">{{ form.process_title.label }}</label>
+        {{ form.process_title }}
+
+        <label class="form-label mt-3">{{ form.process_list.label }}</label>
+        {{ form.process_list }}
+      </div>
+    </div>
+
+    <!-- ================= DELIVERY ================= -->
+    <div class="card mb-4">
+      <div class="card-header">
+        <h5 class="card-title mb-0">Local & International Delivery</h5>
+      </div>
+      <div class="card-body">
+        <label class="form-label">{{ form.delivery_title.label }}</label>
+        {{ form.delivery_title }}
+
+        <label class="form-label mt-3">{{ form.delivery_list.label }}</label>
+        {{ form.delivery_list }}
+      </div>
+    </div>
+
+    <!-- ================= PRICING ================= -->
+    <div class="card mb-4">
+      <div class="card-header">
+        <h5 class="card-title mb-0">Pricing Structure</h5>
+      </div>
+      <div class="card-body">
+        <label class="form-label">{{ form.pricing_title.label }}</label>
+        {{ form.pricing_title }}
+
+        <label class="form-label mt-3">{{ form.pricing_body.label }}</label>
+        {{ form.pricing_body }}
+      </div>
+    </div>
+
+    <!-- ================= CTA ================= -->
+    <div class="card mb-4">
+      <div class="card-header">
+        <h5 class="card-title mb-0">Call To Action</h5>
+      </div>
+      <div class="card-body row g-3">
+        <div class="col-md-6">
+          <label class="form-label">{{ form.cta_text.label }}</label>
+          {{ form.cta_text }}
+        </div>
+        <div class="col-md-6">
+          <label class="form-label">{{ form.cta_subtext.label }}</label>
+          {{ form.cta_subtext }}
+        </div>
+      </div>
+    </div>
+
+    <!-- SAVE -->
+    <div class="text-end mb-4">
+      <button class="btn btn-primary px-4" type="submit">
+        Save About Page
+      </button>
+    </div>
+
+  </form>
+
+</div>
+
+{% endblock %}

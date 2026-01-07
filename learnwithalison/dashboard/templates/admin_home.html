@@ -1,0 +1,209 @@
+{% extends 'dashlayout.html' %}
+{% load static %}
+{% block content %}
+
+<div class="container-fluid">
+
+  <!-- PAGE TITLE -->
+  <div class="page-title-head d-flex align-items-center mb-3">
+    <div class="flex-grow-1">
+      <h4 class="fs-xl fw-bold m-0">Edit Home Content</h4>
+    </div>
+
+    <div class="text-end">
+      <ol class="breadcrumb m-0 py-0">
+        <li class="breadcrumb-item"><a href="#">Dashboard</a></li>
+        <li class="breadcrumb-item active">Home Page</li>
+      </ol>
+    </div>
+  </div>
+
+  <form method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+
+    <!-- ================= HERO SECTION ================= -->
+    <div class="card mb-4">
+      <div class="card-header">
+        <h5 class="card-title mb-0">Hero Section</h5>
+      </div>
+
+      <div class="card-body">
+        <div class="row g-3">
+
+          <div class="col-md-6">
+            <label class="form-label">Hero Badge</label>
+            {{ form.hero_badge }}
+          </div>
+
+          <div class="col-md-6">
+            <label class="form-label">Hero Title</label>
+            {{ form.hero_title }}
+          </div>
+
+          <div class="col-12">
+            <label class="form-label">Hero Subtitle</label>
+            {{ form.hero_subtitle }}
+          </div>
+
+          <div class="col-md-6">
+            <label class="form-label">Hero Background Image</label>
+            {{ form.hero_background }}
+            {% if home.hero_background %}
+              <div class="mt-2">
+                <img src="{{ home.hero_background.url }}"
+                     class="img-fluid rounded"
+                     style="max-height:120px;">
+              </div>
+            {% endif %}
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <!-- ================= UNIVERSITY CARD SECTION ================= -->
+    <div class="card mb-4">
+      <div class="card-header">
+        <h5 class="card-title mb-0">University Card Section</h5>
+      </div>
+
+      <div class="card-body">
+        <div class="row g-3">
+
+          <div class="col-md-4">
+            <label class="form-label">Intro Text</label>
+            {{ form.card_intro }}
+          </div>
+
+          <div class="col-md-4">
+            <label class="form-label">Heading</label>
+            {{ form.card_heading }}
+          </div>
+
+          <div class="col-md-4">
+            <label class="form-label">Button Text</label>
+            {{ form.card_button_text }}
+          </div>
+
+          <hr class="my-3">
+
+          <div class="col-md-4">
+            <label class="form-label">Card 1 Title</label>
+            {{ form.card1_title }}
+            {{ form.card1_text }}
+          </div>
+
+          <div class="col-md-4">
+            <label class="form-label">Card 2 Title</label>
+            {{ form.card2_title }}
+            {{ form.card2_text }}
+          </div>
+
+          <div class="col-md-4">
+            <label class="form-label">Card 3 Title</label>
+            {{ form.card3_title }}
+            {{ form.card3_text }}
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <!-- ================= WELCOME SECTION ================= -->
+    <div class="card mb-4">
+      <div class="card-header">
+        <h5 class="card-title mb-0">Welcome / About Section</h5>
+      </div>
+
+      <div class="card-body">
+        <div class="row g-3">
+          <div class="col-md-12">
+            <label class="form-label">Welcome Title</label>
+            {{ form.welcome_title }}
+          </div>
+
+          <div class="col-md-6">
+            <label class="form-label">Intro Text</label>
+            {{ form.welcome_intro }}
+          </div>
+
+          <div class="col-md-6">
+            <label class="form-label">Main Body</label>
+            {{ form.welcome_body }}
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ================= WHY CHOOSE SECTION ================= -->
+    <div class="card mb-4">
+      <div class="card-header">
+        <h5 class="card-title mb-0">Why Choose Section</h5>
+      </div>
+
+      <div class="card-body">
+        <div class="row g-3">
+          <div class="col-md-12">
+            <label class="form-label">Section Title</label>
+            {{ form.why_choose_title }}
+          </div>
+
+          <div class="col-md-12">
+            <label class="form-label">Intro Text</label>
+            {{ form.why_choose_intro }}
+          </div>
+
+          <div class="col-md-12">
+            <label class="form-label">Points (One per line)</label>
+            {{ form.why_choose_points }}
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ================= SOCIAL LINKS ================= -->
+  <div class="card mb-4">
+  <div class="card-header">
+    <h5 class="card-title mb-0">Social Handles (Text Only)</h5>
+  </div>
+
+  <div class="card-body">
+    <div class="row g-3">
+
+      <div class="col-md-3">
+        <label class="form-label">{{ form.instagram.label }}</label>
+        {{ form.instagram }}
+      </div>
+
+      <div class="col-md-3">
+        <label class="form-label">{{ form.tiktok.label }}</label>
+        {{ form.tiktok }}
+      </div>
+
+      <div class="col-md-3">
+        <label class="form-label">{{ form.facebook.label }}</label>
+        {{ form.facebook }}
+      </div>
+
+      <div class="col-md-3">
+        <label class="form-label">{{ form.twitter.label }}</label>
+        {{ form.twitter }}
+      </div>
+
+    </div>
+  </div>
+</div>
+
+
+    <!-- ================= SAVE ================= -->
+    <div class="text-end mb-4">
+      <button type="submit" class="btn btn-primary px-4">
+        Save Changes
+      </button>
+    </div>
+
+  </form>
+
+</div>
+
+{% endblock %}

@@ -14,4 +14,9 @@ urlpatterns = [
     path('contact/', views.contact, name='contact'),
     path('membership/', views.membership, name='membership'),
     path('check_superuser/', check_superuser, name='check_superuser'),
+    path(
+        "courses-products/",
+        views.courses_products_view,
+        name="courses_products"
+    ),
 ]

@@ -48,6 +48,7 @@ urlpatterns = [
     path('admin/students/', views.admin_students, name='admin_students'),
     path('students/edit/<int:user_id>/', views.edit_user, name='edit_user'),
     path('students/delete/<int:user_id>/', views.delete_user, name='delete_user'),
+
     # Instructor
     path('admin/instructor/profile/', views.instructor_profile, name='instructor_profile'),
     path('admin/instructor/courses/', views.instructor_courses, name='instructor_courses'),
@@ -62,7 +63,14 @@ urlpatterns = [
     path('admin/pages/', views.admin_pages, name='admin_pages'),
     path('admin/faqs/', views.admin_faqs, name='admin_faqs'),
     path('admin/testimonials/', views.admin_testimonials, name='admin_testimonials'),
-
+    path("admin/homeedit/", views.admin_home, name="admin_home"),
+    path("admin/about/", views.admin_about, name="admin_about"),
+    path("admin/products/", views.admin_products, name="admin_products"),
+    path(
+        "admin/users/<int:user_id>/send-email/",
+        views.admin_send_marketing_email,
+        name="admin_send_marketing_email"
+    ),
     # Support
     path('admin/support/', views.admin_support, name='admin_support'),
 

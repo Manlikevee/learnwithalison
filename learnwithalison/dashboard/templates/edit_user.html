@@ -315,6 +315,68 @@
     </div>
   </div>
 
+
+    <!-- ================= MARKETING EMAIL ================= -->
+<div class="row mt-4">
+  <div class="col-12">
+
+    <div class="card border-primary">
+      <div class="card-header bg-primary-subtle">
+        <h5 class="card-title mb-0 text-primary">
+          Send Marketing / Follow-up Email
+        </h5>
+      </div>
+
+      <div class="card-body">
+
+        <!-- EMAIL DISPLAY -->
+        <div class="mb-3">
+          <label class="form-label">Recipient Email</label>
+          <input type="email"
+                 class="form-control"
+                 value="{{ user_obj.email|default:'No email available' }}"
+                 readonly>
+        </div>
+
+        <!-- MESSAGE FORM -->
+        <form method="POST" action="{% url 'admin_send_marketing_email' user_obj.id %}">
+          {% csrf_token %}
+
+          <div class="mb-3">
+            <label class="form-label">Message</label>
+            <textarea name="message"
+                      rows="6"
+                      class="form-control"
+                      placeholder="Write your message here..."
+                      required></textarea>
+            <small class="text-muted">
+              This email will be sent directly to the user.
+            </small>
+          </div>
+
+          <!-- ACTION -->
+          <div class="text-end">
+            {% if user_obj.email %}
+              <button type="submit" class="btn btn-primary">
+                Send Email
+              </button>
+            {% else %}
+              <button type="button"
+                      class="btn btn-secondary"
+                      disabled>
+                Email Not Available
+              </button>
+            {% endif %}
+          </div>
+
+        </form>
+
+      </div>
+    </div>
+
+  </div>
+</div>
+
 </div>
 
 </div>

@@ -3,15 +3,19 @@ from decimal import Decimal
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
+from django.core.mail import send_mail, EmailMultiAlternatives
 from django.db import transaction
 from django.db.models import F, Sum
 from django.shortcuts import render, redirect, get_object_or_404
 from datetime import datetime
 
+from django.template.loader import render_to_string
 from django.utils.crypto import get_random_string
 
 from dashboard.models import Category, Course, SupportTicket, YearlyRevenueProjection, CourseView, CoursePurchase, \
     CartItem
+from home.forms import HomePageForm, AboutPageForm, InternationalProductsForm
+from home.models import HomePage, AboutPage, InternationalAndProducts
 from users.models import Profile
 from django.utils.timezone import now
 
@@ -597,6 +601,7 @@ def admin_students(request):
 
 @login_required
 def edit_user(request, user_id):
+    # messages.success(request, "Email sent successfully.")
     user = get_object_or_404(User, id=user_id)
 
     # ❌ Protect superuser
@@ -748,7 +753,99 @@ def admin_faqs(request):
 def admin_testimonials(request):
     return render(request, 'testimonials.html')
 
+def admin_home(request):
+    home, _ = HomePage.objects.get_or_create(id=1)
+    form = HomePageForm(request.POST or None, request.FILES or None, instance=home)
 
+    if request.method == "POST" and form.is_valid():
+        form.save()
+        messages.success(request, "Home page updated successfully.")
+        return redirect("admin_home")
+
+    return render(request, "admin_home.html", {"form": form})
+
+
+def admin_about(request):
+    about, _ = AboutPage.objects.get_or_create(id=1)
+    form = AboutPageForm(request.POST or None, instance=about)
+
+    if request.method == "POST" and form.is_valid():
+        form.save()
+        messages.success(request, "About page updated successfully.")
+        return redirect("admin_about")
+
+    return render(request, "admin_about.html", {"form": form})
+
+
+def admin_products(request):
+    products, _ = InternationalAndProducts.objects.get_or_create(id=1)
+    form = InternationalProductsForm(request.POST or None, instance=products)
+
+    if request.method == "POST" and form.is_valid():
+        form.save()
+        messages.success(request, "Products page updated successfully.")
+        return redirect("admin_products")
+
+    return render(request, "admin_products.html", {"form": form})
+
+
+@login_required
+def admin_send_marketing_email(request, user_id):
+    if request.method != "POST":
+        return redirect("admin_students")
+
+    user = get_object_or_404(User, id=user_id)
+
+    # ✅ Ensure user has email
+    if not user.email:
+        messages.error(request, "User does not have an email address.")
+        return redirect(request.META.get("HTTP_REFERER", "/"))
+
+    message = request.POST.get("message", "").strip()
+
+    # ✅ Validate message
+    if not message:
+        messages.error(request, "Message cannot be empty.")
+        return redirect(request.META.get("HTTP_REFERER", "/"))
+
+    subject = "Message from Instructor Alison’s Tutorials"
+
+    # ✅ Render HTML email
+    html_content = render_to_string(
+        "marketing_email.html",
+        {
+            "subject": subject,
+            "header_title": "Instructor Alison’s Tutorials",
+            "user_name": user.first_name or user.username,
+            "message": message,
+            "year": now().year,
+        }
+    )
+
+    email = EmailMultiAlternatives(
+        subject=subject,
+        body=message,  # plain-text fallback
+        from_email=settings.DEFAULT_FROM_EMAIL,
+        to=[user.email],
+    )
+
+    email.attach_alternative(html_content, "text/html")
+
+    # ✅ FAIL SILENTLY BUT CHECK RESULT
+    sent_count = email.send(fail_silently=True)
+
+    if sent_count == 0:
+        messages.error(
+            request,
+            "Email could not be sent. Please check email configuration and try again."
+        )
+    else:
+        messages.success(
+            request,
+            f"Email sent successfully to {user.email}."
+        )
+
+    return redirect(request.META.get("HTTP_REFERER", "/"))
 # ======================
 # SUPPORT
 # ======================

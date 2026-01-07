@@ -104,32 +104,60 @@
   </li>
 
   <!-- Website -->
-  <li class="side-nav-item">
-    <a data-bs-toggle="collapse" href="#sidebarPages" class="side-nav-link">
-      <span class="menu-icon"><i data-lucide="file-text"></i></span>
-      <span class="menu-text">Website</span>
-      <span class="menu-arrow"></span>
-    </a>
-    <div class="collapse" id="sidebarPages">
-      <ul class="sub-menu">
-        <li class="side-nav-item">
-          <a href="{% url 'admin_pages' %}" class="side-nav-link">
-            Pages
-          </a>
-        </li>
-        <li class="side-nav-item">
-          <a href="{% url 'admin_faqs' %}" class="side-nav-link">
-            FAQs
-          </a>
-        </li>
-        <li class="side-nav-item">
-          <a href="{% url 'admin_testimonials' %}" class="side-nav-link">
-            Testimonials
-          </a>
-        </li>
-      </ul>
-    </div>
-  </li>
+<li class="side-nav-item">
+  <a data-bs-toggle="collapse" href="#sidebarPages" class="side-nav-link">
+    <span class="menu-icon"><i data-lucide="file-text"></i></span>
+    <span class="menu-text">Website</span>
+    <span class="menu-arrow"></span>
+  </a>
+
+  <div class="collapse" id="sidebarPages">
+    <ul class="sub-menu">
+
+      <!-- HOME CONTENT -->
+      <li class="side-nav-item">
+        <a href="{% url 'admin_home' %}" class="side-nav-link">
+          Edit Home Content
+        </a>
+      </li>
+
+      <!-- ABOUT CONTENT -->
+      <li class="side-nav-item">
+        <a href="{% url 'admin_about' %}" class="side-nav-link">
+          Edit About Content
+        </a>
+      </li>
+
+      <!-- PRODUCTS / INTERNATIONAL -->
+      <li class="side-nav-item">
+        <a href="{% url 'admin_products' %}" class="side-nav-link">
+          Edit Product Content
+        </a>
+      </li>
+
+      <!-- EXISTING -->
+      <li class="side-nav-item">
+        <a href="{% url 'admin_pages' %}" class="side-nav-link">
+          Pages
+        </a>
+      </li>
+
+      <li class="side-nav-item">
+        <a href="{% url 'admin_faqs' %}" class="side-nav-link">
+          FAQs
+        </a>
+      </li>
+
+      <li class="side-nav-item">
+        <a href="{% url 'admin_testimonials' %}" class="side-nav-link">
+          Testimonials
+        </a>
+      </li>
+
+    </ul>
+  </div>
+</li>
+
 
   <!-- Support -->
   <li class="side-nav-item">
