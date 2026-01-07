@@ -32,6 +32,11 @@ urlpatterns = [
         views.admin_course_lesson_upload,
         name='admin_course_lesson_upload'
     ),
+    path(
+        'dashboard/courses/<int:course_id>/lessons/upload/',
+        views.resumable_lesson_upload,
+        name='resumable_lesson_upload'
+    ),
     path('courses/edit/<int:course_id>/', views.admin_course_edit, name='admin_course_edit'),
     path('courses/delete/<int:course_id>/', views.admin_course_delete, name='admin_course_delete'),
     path('categories/', views.admin_categories, name='admin_categories'),

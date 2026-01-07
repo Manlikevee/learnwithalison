@@ -209,10 +209,12 @@ class CourseLesson(models.Model):
 
     title = models.CharField(max_length=255)
 
-    video = models.FileField(
-        upload_to='courses/videos/'
-    )
 
+    video = models.FileField(
+        upload_to='courses/videos/',
+        max_length=500,  # ✅ VERY IMPORTANT
+        blank=True
+    )
     duration = models.CharField(
         max_length=50,
         blank=True

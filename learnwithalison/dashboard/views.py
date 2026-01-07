@@ -39,7 +39,11 @@ def course_detail(request, course_id):
         status='published'
     )
 
-    # 🔥 VIEW TRACKING
+    sections = course.sections.prefetch_related('lessons')
+
+    # -----------------------------
+    # VIEW TRACKING
+    # -----------------------------
     if request.user.is_authenticated:
         view, created = CourseView.objects.get_or_create(
             course=course,
@@ -54,16 +58,33 @@ def course_detail(request, course_id):
             view_count=F('view_count') + 1
         )
 
+    # -----------------------------
+    # PURCHASE CHECK
+    # -----------------------------
+    has_purchased = False
+    purchase = None
+
+    if request.user.is_authenticated:
+        purchase = CoursePurchase.objects.filter(
+            user=request.user,
+            course=course,
+            # status='completed'
+        ).first()
+
+        has_purchased = purchase is not None
+    print(has_purchased)
     return render(request, "course_detail.html", {
-        "course": course
+        "course": course,
+        "sections": sections,
+        "has_paid": has_purchased,
+        "purchase": purchase,  # optional, useful later
     })
-
-
 
 @login_required
 def dashboard(request):
     user = request.user
-
+    if user.is_superuser:
+        return redirect('admin_dashboard')
     # 🔹 Get or create profile safely
     profile, created = Profile.objects.get_or_create(user=user)
 
@@ -128,6 +149,127 @@ def dashboard(request):
         "completed_courses": enrolled_courses,
         "order_history": order_history,
     })
+
+
+import os
+from django.conf import settings
+from django.http import JsonResponse
+from django.views.decorators.csrf import csrf_exempt
+from django.contrib.auth.decorators import login_required
+from django.shortcuts import get_object_or_404
+from .models import Course, CourseLesson, CourseSection
+
+CHUNK_DIR = settings.MEDIA_ROOT  # /home/learesoa/public_html/chunk
+
+@csrf_exempt
+@login_required
+def resumable_lesson_upload(request, course_id):
+
+    course = get_object_or_404(
+        Course,
+        id=course_id,
+        author=request.user
+    )
+
+    # ===== RESUME CHECK (GET) =====
+    if request.method == "GET":
+        identifier = request.GET.get("resumableIdentifier")
+        chunk_number = request.GET.get("resumableChunkNumber")
+
+        chunk_path = os.path.join(
+            CHUNK_DIR, f"{identifier}_{chunk_number}.part"
+        )
+
+        if os.path.exists(chunk_path):
+            return JsonResponse({}, status=200)
+        return JsonResponse({}, status=204)
+
+    # ===== CHUNK UPLOAD (POST) =====
+    if request.method == "POST":
+
+        identifier = request.POST.get("resumableIdentifier")
+        filename = request.POST.get("resumableFilename")
+        chunk_number = int(request.POST.get("resumableChunkNumber"))
+        total_chunks = int(request.POST.get("resumableTotalChunks"))
+
+        section_id = request.POST.get("section")
+        title = request.POST.get("title")
+        duration = request.POST.get("duration", "")
+
+        video_chunk = request.FILES.get("file")
+
+        if not video_chunk:
+            return JsonResponse({"error": "Missing chunk"}, status=400)
+
+        os.makedirs(CHUNK_DIR, exist_ok=True)
+
+        chunk_path = os.path.join(
+            CHUNK_DIR, f"{identifier}_{chunk_number}.part"
+        )
+
+        with open(chunk_path, "wb+") as dest:
+            for chunk in video_chunk.chunks():
+                dest.write(chunk)
+
+        # ===== CHECK IF ALL CHUNKS EXIST =====
+        uploaded = [
+            os.path.exists(
+                os.path.join(CHUNK_DIR, f"{identifier}_{i}.part")
+            )
+            for i in range(1, total_chunks + 1)
+        ]
+
+        if all(uploaded):
+
+            final_dir = os.path.join(
+                settings.MEDIA_ROOT, "courses/videos"
+            )
+            os.makedirs(final_dir, exist_ok=True)
+
+            final_path = os.path.join(final_dir, filename)
+
+            with open(final_path, "wb") as final:
+                for i in range(1, total_chunks + 1):
+                    with open(
+                        os.path.join(CHUNK_DIR, f"{identifier}_{i}.part"),
+                        "rb"
+                    ) as part:
+                        final.write(part.read())
+
+            # cleanup
+            for i in range(1, total_chunks + 1):
+                os.remove(
+                    os.path.join(CHUNK_DIR, f"{identifier}_{i}.part")
+                )
+
+            section = None
+            if section_id:
+                section = get_object_or_404(
+                    CourseSection,
+                    id=section_id,
+                    course=course
+                )
+
+            lesson = CourseLesson.objects.create(
+                course=course,
+                section=section,
+                title=title,
+                video=f"courses/videos/{filename}",
+                duration=duration,
+            )
+
+            return JsonResponse({
+                "success": True,
+                "lesson_id": lesson.id
+            })
+
+        return JsonResponse({"chunk_received": True})
+
+    return JsonResponse({"error": "Invalid request"}, status=400)
+
+
+
+
 @login_required
 def admin_dashboard(request):
     current_year = now().year
@@ -245,7 +387,7 @@ def admin_course_curriculum(request, course_id):
     course = get_object_or_404(
         Course,
         id=course_id,
-        author=request.user
+        # author=request.user
     )
 
     return render(request, 'course_curriculum.html', {
@@ -273,7 +415,7 @@ def admin_course_lesson_upload(request, course_id):
     course = get_object_or_404(
         Course,
         id=course_id,
-        author=request.user
+        # author=request.user
     )
 
     section_id = request.POST.get('section')
@@ -322,7 +464,7 @@ def admin_course_section_create(request, course_id):
     course = get_object_or_404(
         Course,
         id=course_id,
-        author=request.user
+        # author=request.user
     )
 
     title = request.POST.get('title')
@@ -346,23 +488,37 @@ def admin_course_section_create(request, course_id):
 
 @login_required
 def admin_course_edit(request, course_id):
-    course = get_object_or_404(Course, id=course_id)
-    categories = Category.objects.all()
+    course = get_object_or_404(
+        Course,
+        id=course_id,
+        # author=request.user
+    )
+
+    categories = Category.objects.filter(status='active')
 
     if request.method == 'POST':
         course.title = request.POST.get('title')
         course.category_id = request.POST.get('category')
+        course.level = request.POST.get('level')
+        course.short_description = request.POST.get('short_description')
         course.description = request.POST.get('description')
         course.status = request.POST.get('status')
 
-        if request.FILES.get('video'):
-            course.video = request.FILES['video']
+        price_type = request.POST.get('price_type')
+        price = request.POST.get('price')
+
+        course.price_type = price_type
+        course.price = price if price_type == 'paid' else None
 
         if request.FILES.get('thumbnail'):
             course.thumbnail = request.FILES['thumbnail']
 
         course.save()
-        return redirect('admin_courses')
+
+        messages.success(request, "Course updated successfully")
+
+        # 👉 REDIRECT TO CURRICULUM / VIDEO UPLOAD PAGE
+        return redirect('admin_course_curriculum', course.id)
 
     return render(request, 'edit_course.html', {
         'course': course,
@@ -443,27 +599,69 @@ def admin_students(request):
 def edit_user(request, user_id):
     user = get_object_or_404(User, id=user_id)
 
+    # ❌ Protect superuser
     if user.is_superuser:
         messages.error(request, "Superuser cannot be edited.")
         return redirect('admin_students')
 
+    # -----------------------------
+    # UPDATE USER + PROFILE
+    # -----------------------------
     if request.method == "POST":
-        user.first_name = request.POST.get('first_name')
-        user.last_name = request.POST.get('last_name')
-        user.email = request.POST.get('email')
+        user.first_name = request.POST.get('first_name', '').strip()
+        user.last_name = request.POST.get('last_name', '').strip()
+        user.email = request.POST.get('email', '').strip()
         user.save()
 
         profile = user.profile
-        profile.phone = request.POST.get('phone')
-        profile.occupation = request.POST.get('occupation')
-        profile.bio = request.POST.get('bio')
+        profile.phone = request.POST.get('phone', '').strip()
+        profile.occupation = request.POST.get('occupation', '').strip()
+        profile.bio = request.POST.get('bio', '').strip()
         profile.save()
 
         messages.success(request, "User updated successfully.")
         return redirect('admin_students')
 
-    return render(request, 'edit_user.html', {'user_obj': user})
+    # -----------------------------
+    # USER RELATED DATA
+    # -----------------------------
 
+    # Cart items
+    cart_items = CartItem.objects.filter(
+        user=user
+    ).select_related('course')
+
+    # Purchases
+    purchases = CoursePurchase.objects.filter(
+        user=user
+    ).select_related('course').order_by('-created_at')
+
+    # Support tickets
+    support_tickets = SupportTicket.objects.filter(
+        user=user
+    ).order_by('-created_at')
+
+    # Optional counts (useful in UI)
+    cart_count = cart_items.count()
+    purchase_count = purchases.count()
+    ticket_count = support_tickets.count()
+
+    return render(request, 'edit_user.html', {
+        'user_obj': user,
+
+        # profile already available via user.profile
+        'profile': user.profile,
+
+        # related data
+        'cart_items': cart_items,
+        'purchases': purchases,
+        'support_tickets': support_tickets,
+
+        # counts
+        'cart_count': cart_count,
+        'purchase_count': purchase_count,
+        'ticket_count': ticket_count,
+    })
 
 @login_required
 def delete_user(request, user_id):

@@ -4,6 +4,7 @@
 
 <div class="container-fluid">
 
+  <!-- PAGE TITLE -->
   <div class="page-title-head d-flex align-items-center mb-3">
     <div class="flex-grow-1">
       <h4 class="fs-xl fw-bold m-0">Edit Course</h4>
@@ -17,13 +18,15 @@
 
       <!-- TITLE -->
       <label class="form-label">Course Title</label>
-      <input type="text" name="title"
+      <input type="text"
+             name="title"
              class="form-control mb-3"
-             value="{{ course.title }}" required>
+             value="{{ course.title }}"
+             required>
 
       <!-- CATEGORY -->
       <label class="form-label">Category</label>
-      <select name="category" class="form-select mb-3">
+      <select name="category" class="form-select mb-3" required>
         {% for category in categories %}
           <option value="{{ category.id }}"
             {% if category.id == course.category.id %}selected{% endif %}>
@@ -32,75 +35,87 @@
         {% endfor %}
       </select>
 
-      <!-- DESCRIPTION -->
-      <label class="form-label">Description</label>
+      <!-- LEVEL -->
+      <label class="form-label">Course Level</label>
+      <select name="level" class="form-select mb-3">
+        <option value="beginner" {% if course.level == 'beginner' %}selected{% endif %}>Beginner</option>
+        <option value="intermediate" {% if course.level == 'intermediate' %}selected{% endif %}>Intermediate</option>
+        <option value="advanced" {% if course.level == 'advanced' %}selected{% endif %}>Advanced</option>
+      </select>
+
+      <!-- SHORT DESCRIPTION -->
+      <label class="form-label">Short Description</label>
+      <input type="text"
+             name="short_description"
+             class="form-control mb-3"
+             value="{{ course.short_description }}">
+
+      <!-- FULL DESCRIPTION -->
+      <label class="form-label">Full Description</label>
       <textarea name="description"
                 class="form-control mb-3"
                 rows="4">{{ course.description }}</textarea>
 
-      <!-- EXISTING VIDEO -->
-      <label class="form-label">Current Video</label>
-      {% if course.video %}
-        <video class="w-100 rounded mb-2" controls >
-          <source src="{{ course.video.url }}">
-        </video>
-        <small class="text-muted d-block mb-3">
-          Upload a new video to replace this one
-        </small>
-      {% else %}
-        <p class="text-muted mb-2">No video uploaded</p>
-      {% endif %}
-
-      <!-- VIDEO INPUT -->
-      <input type="file" name="video" class="form-control mb-4" accept="video/*">
-
-      <!-- EXISTING THUMBNAIL -->
-      <label class="form-label">Current Thumbnail</label>
+      <!-- THUMBNAIL -->
+      <label class="form-label">Course Thumbnail</label>
       {% if course.thumbnail %}
         <img src="{{ course.thumbnail.url }}"
              class="img-fluid rounded mb-2"
              style="max-height: 200px; object-fit: cover;">
-        <small class="text-muted d-block mb-3">
+        <small class="text-muted d-block mb-2">
           Upload a new image to replace this thumbnail
         </small>
-      {% else %}
-        <p class="text-muted mb-2">No thumbnail uploaded</p>
       {% endif %}
-
-      <!-- THUMBNAIL INPUT -->
-      <input type="file" name="thumbnail"
+      <input type="file"
+             name="thumbnail"
              class="form-control mb-4"
              accept="image/*">
 
-      <!-- DURATION -->
-      <label class="form-label">Duration</label>
-      <input type="text" name="duration"
-             class="form-control mb-3"
-             value="{{ course.duration }}" readonly>
+      <!-- PRICING -->
+      <label class="form-label">Pricing</label>
+      <select name="price_type"
+              id="priceType"
+              class="form-select mb-3">
+        <option value="free" {% if course.price_type == 'free' %}selected{% endif %}>Free</option>
+        <option value="paid" {% if course.price_type == 'paid' %}selected{% endif %}>Paid</option>
+      </select>
+
+      <div class="mb-3 {% if course.price_type != 'paid' %}d-none{% endif %}" id="priceField">
+        <input type="number"
+               name="price"
+               class="form-control"
+               value="{{ course.price }}"
+               placeholder="Enter course price">
+      </div>
 
       <!-- STATUS -->
       <label class="form-label">Status</label>
       <select name="status" class="form-select mb-4">
-        <option value="draft" {% if course.status == 'draft' %}selected{% endif %}>
-          Draft
-        </option>
-        <option value="published" {% if course.status == 'published' %}selected{% endif %}>
-          Published
-        </option>
+        <option value="draft" {% if course.status == 'draft' %}selected{% endif %}>Draft</option>
+        <option value="published" {% if course.status == 'published' %}selected{% endif %}>Published</option>
       </select>
 
       <!-- ACTIONS -->
       <div class="d-flex gap-2">
-        <button class="btn btn-primary px-4">Save Changes</button>
+        <button class="btn btn-primary px-4">
+          Save & Continue
+        </button>
         <a href="{% url 'admin_courses' %}" class="btn btn-light px-4">
           Cancel
         </a>
       </div>
 
     </div>
-
   </form>
 
 </div>
+
+<!-- ================= JS ================= -->
+<script>
+  document.getElementById("priceType").addEventListener("change", e => {
+    document.getElementById("priceField")
+      .classList.toggle("d-none", e.target.value !== "paid");
+  });
+</script>
 
 {% endblock %}

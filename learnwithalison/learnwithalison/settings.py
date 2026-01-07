@@ -26,7 +26,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-e$52__2vr^t&z_$kwf371i-o12(0fi6x8cvaekn%@r(&3a=bnf'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['learnwithalison.com', 'localhost', '127.0.0.1']
 
@@ -88,6 +88,13 @@ DATABASES = {
     }
 }
 
+
+# allow large uploads
+
+DATA_UPLOAD_MAX_MEMORY_SIZE = 5 * 1024 * 1024 * 1024   # 5GB
+FILE_UPLOAD_MAX_MEMORY_SIZE = 5 * 1024 * 1024 * 1024   # 5GB
+
+FILE_UPLOAD_PERMISSIONS = 0o644
 
 # Password validation
 # https://docs.djangoproject.com/en/6.0/ref/settings/#auth-password-validators

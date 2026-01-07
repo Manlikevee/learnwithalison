@@ -2,9 +2,13 @@ from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
 from django.shortcuts import render
 
+from dashboard.models import Course
+
+
 # Create your views here.
 def home(request):
-    return render(request, 'index.html')
+    courses = Course.objects.order_by("-created_at")[:3]
+    return render(request, 'index.html', {'courses': courses})
 
 
 

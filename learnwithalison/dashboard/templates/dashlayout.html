@@ -81,7 +81,7 @@ checkSuperuser();
                 <!-- User -->
 <div class="sidenav-user">
   <div class="d-flex align-items-center">
-    <a href="profile.html" class="link-reset fw-bold sidenav-user-name">
+    <a href="{% url 'admin_profile' %}" class="link-reset fw-bold sidenav-user-name">
       Geneva K.
     </a>
   </div>
@@ -190,21 +190,21 @@ checkSuperuser();
              aria-expanded="false">
 
             <div class="d-lg-flex align-items-center gap-1 d-none">
-              <h5 class="my-0">Geneva</h5>
+              <h5 class="my-0">{{request.user.username}}</h5>
               <i class="ti ti-chevron-down align-middle"></i>
             </div>
           </a>
 
           <div class="dropdown-menu dropdown-menu-end">
 
-            <a href="profile.html" class="dropdown-item">
+            <a href="{% url 'admin_profile' %}" class="dropdown-item">
               <i class="ti ti-user-circle me-1 fs-17 align-middle"></i>
               <span class="align-middle">Profile</span>
             </a>
 
             <div class="dropdown-divider"></div>
 
-            <a href="/logout" class="dropdown-item fw-semibold text-danger">
+            <a href="{% url 'logout' %}" class="dropdown-item fw-semibold text-danger">
               <i class="ti ti-logout-2 me-1 fs-17 align-middle"></i>
               <span class="align-middle">Log Out</span>
             </a>
