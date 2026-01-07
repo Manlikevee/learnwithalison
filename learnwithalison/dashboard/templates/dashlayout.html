@@ -82,7 +82,7 @@ checkSuperuser();
 <div class="sidenav-user">
   <div class="d-flex align-items-center">
     <a href="{% url 'admin_profile' %}" class="link-reset fw-bold sidenav-user-name">
-      Geneva K.
+        {{request.user.username}}
     </a>
   </div>
 </div>
@@ -279,6 +279,35 @@ checkSuperuser();
 
 <!--    <script src="{% static 'jays/dashboard.js' %}"></script>-->
 
+   <style>
 
+/* Success */
+.alert-success {
+  background-color: #e7f7ee;
+  color: #13683c;
+}
+
+/* Error */
+.alert-error,
+.alert-danger {
+  background-color: #fdecea;
+  color: #9f1c1c;
+}
+
+/* Warning */
+.alert-warning {
+  background-color: #fff4e5;
+  color: #8a4b00;
+}
+
+/* Info */
+.alert-info {
+  background-color: #e7f1ff;
+  color: #084298;
+}
+
+
+
+    </style>
 
 </body></html>

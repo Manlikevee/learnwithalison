@@ -66,6 +66,7 @@ urlpatterns = [
     path("admin/homeedit/", views.admin_home, name="admin_home"),
     path("admin/about/", views.admin_about, name="admin_about"),
     path("admin/products/", views.admin_products, name="admin_products"),
+
     path(
         "admin/users/<int:user_id>/send-email/",
         views.admin_send_marketing_email,

@@ -16,15 +16,67 @@ class BaseBootstrapForm(forms.ModelForm):
             field.widget.attrs["class"] = f"{css_class} form-control".strip()
 
 
-# ================= HOME PAGE =================
 class HomePageForm(BaseBootstrapForm):
     class Meta:
         model = HomePage
-        fields = "__all__"
+        fields = [
+            # HERO
+            "hero_badge",
+            "hero_title",
+            "hero_subtitle",
+            "hero_background",
+
+            # UNIVERSITY CARD
+            "card_intro",
+            "card_heading",
+            "card_button_text",
+            "card1_title",
+            "card1_text",
+            "card2_title",
+            "card2_text",
+            "card3_title",
+            "card3_text",
+
+            # WELCOME
+            "welcome_title",
+            "welcome_intro",
+            "welcome_body",
+
+            # INSTRUCTOR
+            "instructor_name",
+            "instructor_bio",
+
+            # EXAMS
+            "exams_section_title",
+            "exams_section_intro",
+            "exams_nigeria_title",
+            "exams_nigeria_list",
+            "exams_uk_title",
+            "exams_uk_list",
+            "exams_us_title",
+            "exams_us_list",
+            "exams_international_title",
+            "exams_international_list",
+            "exams_global_title",
+            "exams_global_list",
+
+            # WHY CHOOSE
+            "why_choose_title",
+            "why_choose_intro",
+            "why_choose_points",
+
+            # SOCIALS
+            "instagram",
+            "tiktok",
+            "facebook",
+            "twitter",
+        ]
+
         widgets = {
             "hero_subtitle": forms.Textarea(attrs={"rows": 3}),
             "welcome_intro": forms.Textarea(attrs={"rows": 3}),
             "welcome_body": forms.Textarea(attrs={"rows": 4}),
+            "instructor_bio": forms.Textarea(attrs={"rows": 4}),
             "why_choose_intro": forms.Textarea(attrs={"rows": 3}),
             "why_choose_points": forms.Textarea(attrs={"rows": 5}),
             "exams_nigeria_list": forms.Textarea(attrs={"rows": 4}),

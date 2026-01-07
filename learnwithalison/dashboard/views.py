@@ -753,28 +753,75 @@ def admin_faqs(request):
 def admin_testimonials(request):
     return render(request, 'testimonials.html')
 
+
+@login_required
 def admin_home(request):
     home, _ = HomePage.objects.get_or_create(id=1)
-    form = HomePageForm(request.POST or None, request.FILES or None, instance=home)
 
-    if request.method == "POST" and form.is_valid():
-        form.save()
-        messages.success(request, "Home page updated successfully.")
-        return redirect("admin_home")
+    if request.method == "POST":
+        form = HomePageForm(request.POST, request.FILES, instance=home)
+
+        if form.is_valid():
+            # ✅ Preserve existing hero image if none uploaded
+            if not request.FILES.get("hero_background"):
+                form.instance.hero_background = home.hero_background
+
+            form.save()
+            messages.success(request, "Home page updated successfully.")
+            return redirect("admin_home")
+
+        else:
+            # ✅ Show readable validation errors
+            for field, errors in form.errors.items():
+                for error in errors:
+                    if field == "__all__":
+                        messages.error(request, error)
+                    else:
+                        messages.error(
+                            request,
+                            f"{field.replace('_', ' ').title()}: {error}"
+                        )
+
+    else:
+        form = HomePageForm(instance=home)
 
     return render(request, "admin_home.html", {"form": form})
 
 
+@login_required
 def admin_about(request):
     about, _ = AboutPage.objects.get_or_create(id=1)
-    form = AboutPageForm(request.POST or None, instance=about)
 
-    if request.method == "POST" and form.is_valid():
-        form.save()
-        messages.success(request, "About page updated successfully.")
-        return redirect("admin_about")
+    if request.method == "POST":
+        form = AboutPageForm(request.POST, instance=about)
 
-    return render(request, "admin_about.html", {"form": form})
+        if form.is_valid():
+            form.save()
+            messages.success(request, "About page updated successfully.")
+            return redirect("admin_about")
+        else:
+            # ✅ Show why it failed
+            # ✅ Show readable validation errors
+            for field, errors in form.errors.items():
+                for error in errors:
+                    if field == "__all__":
+                        messages.error(request, error)
+                    else:
+                        messages.error(
+                            request,
+                            f"{field.replace('_', ' ').title()}: {error}"
+                        )
+
+    else:
+        form = AboutPageForm(instance=about)
+
+    return render(
+        request,
+        "admin_about.html",
+        {
+            "form": form,
+        }
+    )
 
 
 def admin_products(request):

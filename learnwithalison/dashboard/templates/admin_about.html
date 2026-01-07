@@ -7,7 +7,14 @@
   <!-- PAGE TITLE -->
   <div class="page-title-head d-flex align-items-center mb-3">
     <div class="flex-grow-1">
-      <h4 class="fs-xl fw-bold m-0">Edit About Page Content</h4>
+      <h4 class="fs-xl fw-bold m-0">Edit About Page</h4>
+    </div>
+
+    <div class="text-end">
+      <ol class="breadcrumb m-0 py-0">
+        <li class="breadcrumb-item"><a href="#">Dashboard</a></li>
+        <li class="breadcrumb-item active">About Page</li>
+      </ol>
     </div>
   </div>
 
@@ -20,17 +27,17 @@
         <h5 class="card-title mb-0">Page Introduction</h5>
       </div>
       <div class="card-body row g-3">
-        <div class="col-md-6">
-          <label class="form-label">{{ form.page_title.label }}</label>
+        <div class="col-md-12">
+          <label class="form-label">Page Title</label>
           {{ form.page_title }}
         </div>
-        <div class="col-md-6">
-          <label class="form-label">{{ form.role_title.label }}</label>
-          {{ form.role_title }}
-        </div>
-        <div class="col-12">
-          <label class="form-label">{{ form.page_intro.label }}</label>
+        <div class="col-md-12">
+          <label class="form-label">Page Intro</label>
           {{ form.page_intro }}
+        </div>
+        <div class="col-md-6">
+          <label class="form-label">Role Title</label>
+          {{ form.role_title }}
         </div>
       </div>
     </div>
@@ -41,17 +48,16 @@
         <h5 class="card-title mb-0">Academic Background</h5>
       </div>
       <div class="card-body row g-3">
-        <div class="col-md-6">
-          <label class="form-label">{{ form.academic_title.label }}</label>
+        <div class="col-md-12">
+          <label class="form-label">Section Title</label>
           {{ form.academic_title }}
         </div>
-        <div class="col-12">
-          <label class="form-label">{{ form.academic_list.label }}</label>
+        <div class="col-md-6">
+          <label class="form-label">Qualifications (one per line)</label>
           {{ form.academic_list }}
-          <small class="text-muted">One qualification per line</small>
         </div>
-        <div class="col-12">
-          <label class="form-label">{{ form.academic_summary.label }}</label>
+        <div class="col-md-6">
+          <label class="form-label">Summary</label>
           {{ form.academic_summary }}
         </div>
       </div>
@@ -62,12 +68,15 @@
       <div class="card-header">
         <h5 class="card-title mb-0">Teaching Experience</h5>
       </div>
-      <div class="card-body">
-        <label class="form-label">{{ form.experience_title.label }}</label>
-        {{ form.experience_title }}
-
-        <label class="form-label mt-3">{{ form.experience_body.label }}</label>
-        {{ form.experience_body }}
+      <div class="card-body row g-3">
+        <div class="col-md-12">
+          <label class="form-label">Title</label>
+          {{ form.experience_title }}
+        </div>
+        <div class="col-md-12">
+          <label class="form-label">Experience Body</label>
+          {{ form.experience_body }}
+        </div>
       </div>
     </div>
 
@@ -76,13 +85,15 @@
       <div class="card-header">
         <h5 class="card-title mb-0">Teaching Philosophy</h5>
       </div>
-      <div class="card-body">
-        <label class="form-label">{{ form.philosophy_title.label }}</label>
-        {{ form.philosophy_title }}
-
-        <label class="form-label mt-3">{{ form.philosophy_list.label }}</label>
-        {{ form.philosophy_list }}
-        <small class="text-muted">One principle per line</small>
+      <div class="card-body row g-3">
+        <div class="col-md-12">
+          <label class="form-label">Section Title</label>
+          {{ form.philosophy_title }}
+        </div>
+        <div class="col-md-12">
+          <label class="form-label">Principles (one per line)</label>
+          {{ form.philosophy_list }}
+        </div>
       </div>
     </div>
 
@@ -91,12 +102,15 @@
       <div class="card-header">
         <h5 class="card-title mb-0">Brand Values</h5>
       </div>
-      <div class="card-body">
-        <label class="form-label">{{ form.values_title.label }}</label>
-        {{ form.values_title }}
-
-        <label class="form-label mt-3">{{ form.values_list.label }}</label>
-        {{ form.values_list }}
+      <div class="card-body row g-3">
+        <div class="col-md-12">
+          <label class="form-label">Title</label>
+          {{ form.values_title }}
+        </div>
+        <div class="col-md-12">
+          <label class="form-label">Values (one per line)</label>
+          {{ form.values_list }}
+        </div>
       </div>
     </div>
 
@@ -105,20 +119,35 @@
       <div class="card-header">
         <h5 class="card-title mb-0">Tutoring Services</h5>
       </div>
-      <div class="card-body">
-        <label class="form-label">{{ form.tutoring_services_title.label }}</label>
-        {{ form.tutoring_services_title }}
-
-        <label class="form-label mt-3">{{ form.tutoring_services_list.label }}</label>
-        {{ form.tutoring_services_list }}
+      <div class="card-body row g-3">
+        <div class="col-md-6">
+          <label class="form-label">Section Title</label>
+          {{ form.tutoring_title }}
+        </div>
+        <div class="col-md-6">
+          <label class="form-label">Services Title</label>
+          {{ form.tutoring_services_title }}
+        </div>
+        <div class="col-md-12">
+          <label class="form-label">Services List</label>
+          {{ form.tutoring_services_list }}
+        </div>
       </div>
     </div>
 
     <!-- ================= SUBJECT SUPPORT ================= -->
     <div class="card mb-4">
       <div class="card-header">
-        <h5 class="card-title mb-0">Subject-Specific Support</h5>
+        <h5 class="card-title mb-0">Subject Support</h5>
+
+
       </div>
+              <div class="card-body row g-3">
+                          <div class="col-md-6">
+          <label class="form-label">Subject Support Title</label>
+          {{ form.subjects_title }}
+        </div>
+              </div>
       <div class="card-body row g-3">
         <div class="col-md-6">
           <label class="form-label">Mathematics</label>
@@ -144,64 +173,73 @@
       <div class="card-header">
         <h5 class="card-title mb-0">How Tutoring Works</h5>
       </div>
-      <div class="card-body">
-        <label class="form-label">{{ form.process_title.label }}</label>
-        {{ form.process_title }}
-
-        <label class="form-label mt-3">{{ form.process_list.label }}</label>
-        {{ form.process_list }}
+      <div class="card-body row g-3">
+        <div class="col-md-6">
+          <label class="form-label">Title</label>
+          {{ form.process_title }}
+        </div>
+        <div class="col-md-6">
+          <label class="form-label">Steps</label>
+          {{ form.process_list }}
+        </div>
       </div>
     </div>
 
     <!-- ================= DELIVERY ================= -->
     <div class="card mb-4">
       <div class="card-header">
-        <h5 class="card-title mb-0">Local & International Delivery</h5>
+        <h5 class="card-title mb-0">Delivery</h5>
       </div>
-      <div class="card-body">
-        <label class="form-label">{{ form.delivery_title.label }}</label>
-        {{ form.delivery_title }}
-
-        <label class="form-label mt-3">{{ form.delivery_list.label }}</label>
-        {{ form.delivery_list }}
+      <div class="card-body row g-3">
+        <div class="col-md-6">
+          <label class="form-label">Title</label>
+          {{ form.delivery_title }}
+        </div>
+        <div class="col-md-6">
+          <label class="form-label">Delivery Points</label>
+          {{ form.delivery_list }}
+        </div>
       </div>
     </div>
 
     <!-- ================= PRICING ================= -->
     <div class="card mb-4">
       <div class="card-header">
-        <h5 class="card-title mb-0">Pricing Structure</h5>
+        <h5 class="card-title mb-0">Pricing</h5>
       </div>
-      <div class="card-body">
-        <label class="form-label">{{ form.pricing_title.label }}</label>
-        {{ form.pricing_title }}
-
-        <label class="form-label mt-3">{{ form.pricing_body.label }}</label>
-        {{ form.pricing_body }}
+      <div class="card-body row g-3">
+        <div class="col-md-6">
+          <label class="form-label">Title</label>
+          {{ form.pricing_title }}
+        </div>
+        <div class="col-md-6">
+          <label class="form-label">Pricing Info</label>
+          {{ form.pricing_body }}
+        </div>
       </div>
     </div>
 
     <!-- ================= CTA ================= -->
     <div class="card mb-4">
       <div class="card-header">
-        <h5 class="card-title mb-0">Call To Action</h5>
+        <h5 class="card-title mb-0">Call to Action</h5>
       </div>
       <div class="card-body row g-3">
         <div class="col-md-6">
-          <label class="form-label">{{ form.cta_text.label }}</label>
+          <label class="form-label">CTA Text</label>
           {{ form.cta_text }}
         </div>
         <div class="col-md-6">
-          <label class="form-label">{{ form.cta_subtext.label }}</label>
+          <label class="form-label">CTA Subtext</label>
           {{ form.cta_subtext }}
         </div>
       </div>
     </div>
 
-    <!-- SAVE -->
+    <!-- ================= SAVE ================= -->
     <div class="text-end mb-4">
-      <button class="btn btn-primary px-4" type="submit">
-        Save About Page
+      <button type="submit" class="btn btn-primary px-4">
+        Save Changes
       </button>
     </div>
 
