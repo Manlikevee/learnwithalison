@@ -86,6 +86,9 @@
                 <a href="{% url 'admin_course_edit' course.id %}" class="dropdown-item">
                   <i class="ti ti-edit me-1"></i> Edit
                 </a>
+<a href="{% url 'course_detail' course.id %}" class="dropdown-item">
+  <i class="ti ti-eye me-1"></i> View Course
+</a>
                 <a href="{% url 'admin_course_delete' course.id %}"
                    class="dropdown-item text-danger"
                    onclick="return confirm('Delete this course?');">

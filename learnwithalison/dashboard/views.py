@@ -1,3 +1,4 @@
+import uuid
 from decimal import Decimal
 
 from django.contrib import messages
@@ -409,8 +410,8 @@ from .models import Course, CourseSection, CourseLesson
 @login_required
 def admin_course_lesson_upload(request, course_id):
     """
-    Handles single video upload per request.
-    Frontend can clone inputs & submit multiple times.
+    Handles single lesson creation per request.
+    Supports video upload OR external video link.
     """
 
     if request.method != "POST":
@@ -419,7 +420,7 @@ def admin_course_lesson_upload(request, course_id):
     course = get_object_or_404(
         Course,
         id=course_id,
-        # author=request.user
+        # author=request.user   # enable later if needed
     )
 
     section_id = request.POST.get('section')
@@ -427,13 +428,31 @@ def admin_course_lesson_upload(request, course_id):
     order = request.POST.get('order', 0)
     duration = request.POST.get('duration', '')
     is_preview = request.POST.get('is_preview') == 'true'
+
+    # 🔽 NEW FIELDS
+    is_link = request.POST.get('is_link') == 'true'
+    video_link = request.POST.get('video_link', '').strip()
     video_file = request.FILES.get('video')
 
-    if not video_file or not title:
+    if not title:
         return JsonResponse(
-            {"error": "Title and video are required"},
+            {"error": "Lesson title is required"},
             status=400
         )
+
+    # 🔒 VALIDATION (FILE OR LINK)
+    if is_link:
+        if not video_link:
+            return JsonResponse(
+                {"error": "Video link is required"},
+                status=400
+            )
+    else:
+        if not video_file:
+            return JsonResponse(
+                {"error": "Video file is required"},
+                status=400
+            )
 
     section = None
     if section_id:
@@ -447,7 +466,9 @@ def admin_course_lesson_upload(request, course_id):
         course=course,
         section=section,
         title=title,
-        video=video_file,
+        video=video_file if not is_link else None,
+        video_link=video_link if is_link else '',
+        is_link=is_link,
         duration=duration,
         order=order,
         is_preview=is_preview,
@@ -457,6 +478,7 @@ def admin_course_lesson_upload(request, course_id):
         "success": True,
         "lesson_id": lesson.id,
         "title": lesson.title,
+        "is_link": lesson.is_link,
         "section": section.title if section else None
     })
 
@@ -1053,6 +1075,15 @@ def yearly_projection_view(request):
 def add_to_cart(request, course_id):
     course = get_object_or_404(Course, id=course_id, status="published")
 
+    # 🔒 BLOCK IF ALREADY PURCHASED
+    if CoursePurchase.objects.filter(
+        user=request.user,
+        course=course,
+        status="completed"
+    ).exists():
+        messages.info(request, "You have already purchased this course.")
+        return redirect(request.META.get("HTTP_REFERER", "/"))
+
     cart_item, created = CartItem.objects.get_or_create(
         user=request.user,
         course=course
@@ -1112,43 +1143,112 @@ def checkout(request):
         messages.warning(request, "Your cart is empty")
         return redirect("cart")
 
-    # Calculate total
     total_amount = sum(
         (item.course.price or Decimal("0.00")) for item in cart_items
     )
 
     if request.method == "POST":
+        reference = f"CART-{uuid.uuid4().hex[:10]}"
+
         with transaction.atomic():
             for item in cart_items:
                 course = item.course
                 amount = course.price or Decimal("0.00")
 
-                purchase, created = CoursePurchase.objects.get_or_create(
+                # 🔒 CHECK EXISTING PURCHASE
+                purchase = CoursePurchase.objects.filter(
                     user=request.user,
-                    course=course,
-                    defaults={
-                        "amount": amount,
-                        "status": "completed",
-                        "reference": f"PUR-{get_random_string(10)}",
-                    }
-                )
+                    course=course
+                ).first()
 
-                # Increment purchase count ONLY once
-                if created:
-                    Course.objects.filter(id=course.id).update(
-                        purchase_count=F("purchase_count") + 1
+                if purchase:
+                    # 🚫 Already completed → skip
+                    if purchase.status == "completed":
+                        continue
+
+                    # 🔁 Reuse pending purchase
+                    purchase.amount = amount
+                    purchase.reference = reference
+                    purchase.status = "pending"
+                    purchase.save()
+
+                else:
+                    # ✅ Create new pending purchase
+                    CoursePurchase.objects.create(
+                        user=request.user,
+                        course=course,
+                        amount=amount,
+                        reference=reference,
+                        status="pending"
                     )
 
-            # Clear cart after successful purchase
-            cart_items.delete()
-
-        messages.success(
-            request,
-            "Payment successful. You are now enrolled in your courses."
-        )
-        return redirect("dashboard")  # or dashboard
+        return redirect("paystack_init", reference=reference)
 
     return render(request, "checkout.html", {
         "cart_items": cart_items,
         "total_amount": total_amount
     })
+
+
+@login_required
+def paystack_init(request, reference):
+    purchases = CoursePurchase.objects.filter(
+        user=request.user,
+        reference=reference
+    )
+
+    if not purchases.exists():
+        return JsonResponse({"error": "Invalid transaction"}, status=400)
+
+    total_amount = sum(p.amount for p in purchases)
+
+    return JsonResponse({
+        "email": request.user.email,
+        "amount": int(total_amount * 100),
+        "reference": reference,
+        "public_key": settings.PAYSTACK_PUBLIC_KEY,
+    })
+
+import requests
+from django.utils import timezone
+from django.shortcuts import redirect
+
+@login_required
+def verify_cart_payment(request, reference):
+    purchases = CoursePurchase.objects.filter(
+        user=request.user,
+        reference=reference
+    )
+
+    if not purchases.exists():
+        messages.error(request, "Invalid payment reference")
+        return redirect("cart")
+
+    url = f"https://api.paystack.co/transaction/verify/{reference}"
+
+    headers = {
+        "Authorization": f"Bearer {settings.PAYSTACK_SECRET_KEY}",
+    }
+
+    response = requests.get(url, headers=headers)
+    result = response.json()
+
+    if result.get("status") and result["data"]["status"] == "success":
+        with transaction.atomic():
+            for purchase in purchases:
+                purchase.status = "completed"
+                purchase.paystack_reference = result["data"]["reference"]
+                purchase.paid_at = timezone.now()
+                purchase.save()
+
+                Course.objects.filter(id=purchase.course.id).update(
+                    purchase_count=F("purchase_count") + 1
+                )
+
+            CartItem.objects.filter(user=request.user).delete()
+
+        messages.success(request, "Payment successful. Courses unlocked!")
+        return redirect("dashboard")
+
+    messages.error(request, "Payment verification failed")
+    return redirect("checkout")

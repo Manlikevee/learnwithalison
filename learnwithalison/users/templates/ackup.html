@@ -1,0 +1,134 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+<main>
+  <!-- Hero Area -->
+  <div class="hero-arera course-item-height"
+       style="background-image: url('{% static "images/cv.jpg" %}');">
+    <div class="container">
+      <div class="row">
+        <div class="col-xl-12 text-center">
+          <div class="hero-course-1-text">
+            <h2>Sign In</h2>
+          </div>
+          <div class="course-title-breadcrumb justify-content-center">
+            <nav>
+              <ol class="breadcrumb justify-content-center">
+                <li class="breadcrumb-item">
+                  <a href="{% url 'home' %}">Home</a>
+                </li>
+                <li class="breadcrumb-item">
+                  <span>Sign In</span>
+                </li>
+              </ol>
+            </nav>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Hero End -->
+
+  <!-- Sign In Area -->
+  <div class="signin-page-area pt-120 pb-120">
+    <div class="container">
+
+      {% if messages %}
+      <div class="row justify-content-center mb-4">
+        <div class="col-lg-6">
+          {% for message in messages %}
+            <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+              {{ message }}
+              <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            </div>
+          {% endfor %}
+        </div>
+      </div>
+      {% endif %}
+
+      <div class="row justify-content-center">
+        <div class="col-lg-5 col-md-7">
+
+          <form method="POST" action="{% url 'login' %}">
+            {% csrf_token %}
+
+            <div class="signup-form-wrapper text-center">
+              <h3 class="mb-30">Sign In</h3>
+
+              <div class="signup-wrapper">
+                <input
+                  type="text"
+                  name="username"
+                  placeholder="Username or Email"
+                  required>
+              </div>
+
+              <div class="signup-wrapper password-wrapper">
+                <input
+                  type="password"
+                  name="password"
+                  id="password"
+                  placeholder="Password"
+                  required>
+                <span class="toggle-password" onclick="togglePassword()">👁️</span>
+              </div>
+
+              <div class="signup-action text-start">
+                <input type="checkbox" name="remember_me" id="remember">
+                <label for="remember">Remember me</label>
+              </div>
+
+              <div class="sing-buttom mb-20">
+                <button type="submit" class="sing-btn w-100">
+                  Sign In Now
+                </button>
+              </div>
+
+              <div class="registered wrapper d-flex justify-content-between">
+                <div class="not-register">
+                  <span>Not registered?</span>
+                  <a href="{% url 'register' %}">Sign up</a>
+                </div>
+                <div class="forget-password">
+                  <a href="{% url 'password_reset' %}">Forgot password?</a>
+                </div>
+              </div>
+
+            </div>
+          </form>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+
+<style>
+  .password-wrapper {
+    position: relative;
+  }
+
+  .toggle-password {
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    font-size: 16px;
+    opacity: 0.7;
+  }
+
+  .toggle-password:hover {
+    opacity: 1;
+  }
+</style>
+
+<script>
+  function togglePassword() {
+    const input = document.getElementById("password");
+    input.type = input.type === "password" ? "text" : "password";
+  }
+</script>
+
+{% endblock %}

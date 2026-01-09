@@ -57,7 +57,7 @@
 
     <div class="card-body">
 
-      <!-- LESSON LIST -->
+      <!-- EXISTING LESSONS -->
       {% for lesson in section.lessons.all %}
         <div class="d-flex justify-content-between align-items-center border rounded p-2 mb-2">
           <div>
@@ -78,8 +78,11 @@
 
         <input type="hidden" name="section" value="{{ section.id }}">
         <input type="hidden" name="duration" class="lesson-duration">
+        <input type="hidden" name="is_link" value="false">
 
         <div class="row g-2 align-items-end">
+
+          <!-- TITLE -->
           <div class="col-md-4">
             <label class="form-label">Lesson Title</label>
             <input type="text"
@@ -88,20 +91,40 @@
                    required>
           </div>
 
-          <div class="col-md-5">
+          <!-- SOURCE TOGGLE -->
+          <div class="col-md-3">
+            <label class="form-label">Video Source</label>
+            <select class="form-select video-source">
+              <option value="file">Upload Video</option>
+              <option value="link">Video Link</option>
+            </select>
+          </div>
+
+          <!-- FILE INPUT -->
+          <div class="col-md-5 video-file">
             <label class="form-label">Video File</label>
             <input type="file"
                    name="video"
                    class="form-control"
-                   accept="video/*"
-                   required>
+                   accept="video/*">
           </div>
 
+          <!-- LINK INPUT -->
+          <div class="col-md-5 video-link d-none">
+            <label class="form-label">Video Link</label>
+            <input type="url"
+                   name="video_link"
+                   class="form-control"
+                   placeholder="https://youtube.com / vimeo / s3 link">
+          </div>
+
+          <!-- BUTTON -->
           <div class="col-md-3">
             <button class="btn btn-primary w-100">
-              Upload Lesson
+              Add Lesson
             </button>
           </div>
+
         </div>
 
         <!-- PROGRESS BAR -->
@@ -137,30 +160,49 @@ document.getElementById("sectionForm").addEventListener("submit", function (e) {
   })
   .then(res => res.json())
   .then(data => {
-    if (data.success) location.reload();
-    else alert("Failed to create section");
+    if (data.success) {
+      location.reload();
+    } else {
+      alert(data.error || "Failed to create section");
+    }
   });
 });
 
 
-/* ================= LESSON UPLOAD + DURATION ================= */
+/* ================= LESSON UPLOAD ================= */
 document.querySelectorAll(".lesson-form").forEach(form => {
 
+  const sourceSelect = form.querySelector(".video-source");
+  const fileWrap = form.querySelector(".video-file");
+  const linkWrap = form.querySelector(".video-link");
+  const isLinkInput = form.querySelector('input[name="is_link"]');
+
   const videoInput = form.querySelector('input[type="file"]');
+  const linkInput = form.querySelector('input[name="video_link"]');
   const durationInput = form.querySelector(".lesson-duration");
+
   const progress = form.querySelector(".progress");
   const bar = progress.querySelector(".progress-bar");
 
-  // Read video duration
+  /* TOGGLE SOURCE */
+  sourceSelect.addEventListener("change", () => {
+    const isLink = sourceSelect.value === "link";
+
+    fileWrap.classList.toggle("d-none", isLink);
+    linkWrap.classList.toggle("d-none", !isLink);
+
+    isLinkInput.value = isLink ? "true" : "false";
+  });
+
+  /* READ DURATION (FILES ONLY) */
   videoInput.addEventListener("change", function () {
-    const file = this.files[0];
-    if (!file) return;
+    if (!this.files.length) return;
 
     const video = document.createElement("video");
     video.preload = "metadata";
-    video.src = URL.createObjectURL(file);
+    video.src = URL.createObjectURL(this.files[0]);
 
-    video.onloadedmetadata = function () {
+    video.onloadedmetadata = () => {
       URL.revokeObjectURL(video.src);
 
       const seconds = Math.floor(video.duration);
@@ -172,25 +214,37 @@ document.querySelectorAll(".lesson-form").forEach(form => {
     };
   });
 
-  // Upload lesson
+  /* SUBMIT */
   form.addEventListener("submit", function (e) {
     e.preventDefault();
+
+    const isLink = isLinkInput.value === "true";
+
+    if (isLink && !linkInput.value) {
+      alert("Please enter a video link");
+      return;
+    }
+
+    if (!isLink && !videoInput.files.length) {
+      alert("Please select a video file");
+      return;
+    }
 
     const formData = new FormData(form);
     const xhr = new XMLHttpRequest();
 
     xhr.open("POST", "{% url 'admin_course_lesson_upload' course.id %}");
-
     xhr.setRequestHeader(
       "X-CSRFToken",
       document.querySelector("[name=csrfmiddlewaretoken]").value
     );
 
     progress.classList.remove("d-none");
+    bar.className = "progress-bar progress-bar-striped progress-bar-animated";
     bar.style.width = "0%";
     bar.textContent = "0%";
 
-    xhr.upload.onprogress = function (e) {
+    xhr.upload.onprogress = e => {
       if (e.lengthComputable) {
         const percent = Math.round((e.loaded / e.total) * 100);
         bar.style.width = percent + "%";
@@ -198,21 +252,28 @@ document.querySelectorAll(".lesson-form").forEach(form => {
       }
     };
 
-    xhr.onload = function () {
-      if (xhr.status === 200) {
-        bar.classList.remove("progress-bar-animated");
-        bar.classList.add("bg-success");
-        bar.textContent = "Upload complete";
-        setTimeout(() => location.reload(), 600);
-      } else {
+    xhr.onload = () => {
+      try {
+        const res = JSON.parse(xhr.responseText);
+        if (xhr.status === 200 && res.success) {
+          bar.classList.remove("progress-bar-animated");
+          bar.classList.add("bg-success");
+          bar.textContent = "Lesson added";
+          setTimeout(() => location.reload(), 600);
+        } else {
+          throw new Error(res.error || "Upload failed");
+        }
+      } catch (err) {
         bar.classList.add("bg-danger");
-        bar.textContent = "Upload failed";
+        bar.textContent = "Failed";
+        alert(err.message);
       }
     };
 
-    xhr.onerror = function () {
+    xhr.onerror = () => {
       bar.classList.add("bg-danger");
       bar.textContent = "Error";
+      alert("Network error. Please try again.");
     };
 
     xhr.send(formData);

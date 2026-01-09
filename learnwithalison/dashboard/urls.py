@@ -82,4 +82,7 @@ urlpatterns = [
     path("cart/remove/<int:course_id>/", views.remove_from_cart, name="remove_from_cart"),
     path("cart", views.cart, name="cart"),
     path("checkout/", views.checkout, name="checkout"),
+
+    path("payments/init/<str:reference>/", views.paystack_init, name="paystack_init"),
+    path("payments/verify/<str:reference>/", views.verify_cart_payment, name="verify_cart_payment"),
 ]

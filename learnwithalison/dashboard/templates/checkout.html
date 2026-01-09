@@ -3,6 +3,8 @@
 {% load humanize %}
 {% block content %}
 
+<script src="https://js.paystack.co/v1/inline.js"></script>
+
 <main>
 
   <!-- HERO -->
@@ -17,6 +19,7 @@
     <div class="container">
 
       <div class="row">
+
         <!-- ORDER SUMMARY -->
         <div class="col-lg-8">
           <div class="table-content table-responsive">
@@ -64,12 +67,10 @@
               </li>
             </ul>
 
-            <form method="POST">
-              {% csrf_token %}
-              <button type="submit" class="edu-btn w-100">
-                Confirm & Pay
-              </button>
-            </form>
+            <!-- PAYSTACK BUTTON -->
+            <button id="payBtn" class="edu-btn w-100">
+              Pay with Paystack
+            </button>
 
             <a href="{% url 'cart' %}"
                class="edu-border-btn w-100 mt-10">
@@ -78,11 +79,65 @@
 
           </div>
         </div>
+
       </div>
 
     </div>
   </section>
 
 </main>
+
+<script src="https://js.paystack.co/v1/inline.js"></script>
+
+<script>
+document.getElementById("payBtn").addEventListener("click", function () {
+
+  // Step 1: create pending purchases
+  fetch("{% url 'checkout' %}", {
+    method: "POST",
+    headers: {
+      "X-CSRFToken": "{{ csrf_token }}"
+    }
+  })
+  .then(res => {
+    if (!res.redirected) {
+      throw new Error("Failed to start payment");
+    }
+    return fetch(res.url); // 👈 fetch the JSON instead of navigating
+  })
+  .then(res => res.json())
+  .then(data => {
+
+    if (data.error) {
+      alert(data.error);
+      return;
+    }
+
+    // Step 2: open Paystack popup
+    const handler = PaystackPop.setup({
+      key: data.public_key,
+      email: data.email,
+      amount: data.amount,
+      ref: data.reference,
+
+      callback: function (response) {
+        // Step 3: verify payment
+        window.location.href = `dashboard/payments/verify/${response.reference}/`;
+      },
+
+      onClose: function () {
+        alert("Payment cancelled");
+      }
+    });
+
+    handler.openIframe();
+  })
+  .catch(err => {
+    alert(err.message || "Payment failed");
+  });
+
+});
+</script>
+
 
 {% endblock %}

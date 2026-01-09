@@ -143,7 +143,17 @@ class CoursePurchase(models.Model):
         choices=STATUS_CHOICES,
         default='pending'
     )
+    # ✅ ADD THESE
+    paystack_reference = models.CharField(
+        max_length=100,
+        blank=True,
+        null=True
+    )
 
+    paid_at = models.DateTimeField(
+        blank=True,
+        null=True
+    )
     reference = models.CharField(max_length=100, unique=True)
     created_at = models.DateTimeField(auto_now_add=True)
 
@@ -217,6 +227,13 @@ class CourseLesson(models.Model):
     )
     duration = models.CharField(
         max_length=50,
+        blank=True
+    )
+    # ✅ LINKED VIDEO (OPTIONAL)
+    is_link = models.BooleanField(default=False)
+
+    video_link = models.CharField(
+        max_length=1000,   # supports very long URLs
         blank=True
     )
 
